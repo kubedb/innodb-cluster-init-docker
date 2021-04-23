@@ -11,8 +11,8 @@ data:
 apiVersion: v1
 kind: Service
 metadata:
-  name: "mysql-server"
-  namespace: "test"
+  name: mysql-server
+  namespace: default
 spec:
   ports:
   - port: 3306
@@ -25,7 +25,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mysql-server
-  namespace: "test"
+  namespace: default
 spec:
   serviceName: "mysql-server"
   replicas: 3
