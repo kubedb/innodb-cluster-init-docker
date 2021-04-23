@@ -78,7 +78,18 @@ function create_replication_user() {
 function wait_for_host_online() {
     log "INFO" "checking for host to come online..................................................."
     local mysql="mysql -uroot -ppass"  # "mysql -uroot -ppass -hmysql-server-0.mysql-server.default.svc"
-    retry 120 ${mysql} -N -e "select 1" | awk '{print$1}'
+    retry 120 ${mysql} -N -e "select 1;" | awk '{print$1}'
+    out=$(${mysql} -N -e "select 1;" | awk '{print$1}')
+    if [[ "$out" -eq "0" ]]; then
+        echo "--------------------------------host is online -----------------------"
+    fi
+    log "-----error from here -----------------"
+}
+
+function wait_for_primary_host_online() {
+    log "INFO" "checking for host to come online..................................................."
+    local mysql="mysql -u${replication_user} -ppassword -hmysql-server-0.mysql-server.default.svc"  # "mysql -uroot -ppass -hmysql-server-0.mysql-server.default.svc"
+    retry 120 ${mysql} -N -e "select 1;" | awk '{print$1}'
     out=$(${mysql} -N -e "select 1;" | awk '{print$1}')
     if [[ "$out" -eq "0" ]]; then
         echo "--------------------------------host is online -----------------------"
@@ -163,7 +174,7 @@ function join_in_cluster() {
         echo "$report_host is already in cluster"
         retun
     fi
-    wait_for_host_online
+    wait_for_primary_host_online
     retry 10 ${mysqlshell} -e "cluster = dba.getCluster();cluster.addInstance('${replication_user}@${report_host}',{password:'password',recoveryMethod:'clone'});"
     add=($(${mysqlshell} -e "cluster = dba.getCluster();cluster.addInstance('${replication_user}@${report_host}',{password:'password',recoveryMethod:'clone'});"))
     echo "-------------------------add = ${add[@]}--------------------------------------------------------"
@@ -220,7 +231,7 @@ log "info" "what's cause problem here "
 log "_____MYSQL______" "$pid"
 # wait $pid
 # log "INFO" "The process id of mysqld is '$pid'"
-sleep 10000
+
 #kill -15 $pid
 #
 #echo "==================================================================================================================================================="
@@ -233,17 +244,20 @@ sleep 10000
 #create_replication_user
 #configure_instance
 #
-#if [[ "${report_host}" = "mysql-server-0.mysql-server.default.svc" ]]
-#then
-#  log "info " "${report_host} creating cluster ============================"
-#  create_cluster
-#else
-#
-#  check_existing_cluster
-#  join_in_cluster
-#  log "info" "other servers will be switching to another process .... except the primary"
-#fi
-#
+
+if [[ "${report_host}" = "mysql-server-0.mysql-server.default.svc" ]]
+then
+ log "info " "${report_host} creating cluster ============================"
+ create_cluster
+else
+ check_existing_cluster
+ join_in_cluster
+ log "info" "other servers will be switching to another process .... except the primary"
+fi
+
+
+sleep 10000
+
 #wait $pid
 #log "info" "-----------------is pid = $pid still running -------------------------------------------"
 #
