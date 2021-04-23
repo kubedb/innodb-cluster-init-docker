@@ -74,17 +74,18 @@ function create_replication_user() {
         log "INFO" "Replication user exists. Skipping creating new one......."
     fi
 }
+
 function wait_for_host_online() {
     log "INFO" "checking for host to come online..................................................."
-    local mysql="mysql -uroot -ppass -hmysql-server-0.mysql-server.test.svc"
+    local mysql="mysql -uroot -ppass"  # "mysql -uroot -ppass -hmysql-server-0.mysql-server.default.svc"
     retry 120 ${mysql} -N -e "select 1" | awk '{print$1}'
     out=$(${mysql} -N -e "select 1;" | awk '{print$1}')
     if [[ "$out" -eq "0" ]]; then
         echo "--------------------------------host is online -----------------------"
     fi
     log "-----error from here -----------------"
-
 }
+
 already_configured=0
 restart_required=1
 function configure_instance() {
@@ -115,7 +116,7 @@ function configure_instance() {
 is_boostrap_able=0
 function check_existing_cluster() {
     #todo need all host from peer finder then loop through
-    local hosts=(mysql-server-0.mysql-server.test.svc mysql-server-1.mysql-server.test.svc mysql-server-2.mysql-server.test.svc)
+    local hosts=(mysql-server-0.mysql-server.default.svc mysql-server-1.mysql-server.default.svc mysql-server-2.mysql-server.default.svc)
 
     for host in ${hosts[@]}; do
         #ping in each server see is there any cluster..
@@ -141,11 +142,11 @@ function check_existing_cluster() {
     done
 }
 function create_cluster() {
-    #  mysqlsh -uheheh -pp -hmysql-server-0.mysql-server.test.svc -e "cluster=dba.createCluster('mycluster',{exitStateAction:'OFFLINE_MODE',autoRejoinTries:'20',consistency:'BEFORE_ON_PRIMARY_FAILOVER'});"
+    #  mysqlsh -uheheh -pp -hmysql-server-0.mysql-server.default.svc -e "cluster=dba.createCluster('mycluster',{exitStateAction:'OFFLINE_MODE',autoRejoinTries:'20',consistency:'BEFORE_ON_PRIMARY_FAILOVER'});"
     #cluster=dba.createCluster("mycluster",{exitStateAction:'OFFLINE_MODE',autoRejoinTries:'20',consistency:'BEFORE_ON_PRIMARY_FAILOVER'});
     local mysqlshell="mysqlsh -u${replication_user} -ppassword -h${report_host}"
     retry 30 $mysqlshell -e "cluster=dba.createCluster('mycluster',{exitStateAction:'OFFLINE_MODE',autoRejoinTries:'20',consistency:'BEFORE_ON_PRIMARY_FAILOVER'});"
-    local mysql="mysql -urepl -ppassword -hmysql-server-0.mysql-server.test.svc"
+    local mysql="mysql -urepl -ppassword -hmysql-server-0.mysql-server.default.svc"
     freaking_out=$(${mysql} -N -e 'SELECT member_host FROM performance_schema.replication_group_members;')
     echo "cluster freaking_out" $freaking_out
 }
@@ -153,7 +154,7 @@ available_host="not_found_for_now"
 
 function join_in_cluster() {
     log "info " "join_in_cluster $report_host"
-    #mysqlsh -uheheh -pp -hmysql-server-0.mysql-server.test.svc -e "cluster = dba.getCluster();cluster.addInstance('heheh@mysql-server-2.mysql-server.test.svc:3306',{password:'p',recoveryMethod:'clone'})";
+    #mysqlsh -uheheh -pp -hmysql-server-0.mysql-server.default.svc -e "cluster = dba.getCluster();cluster.addInstance('heheh@mysql-server-2.mysql-server.default.svc:3306',{password:'p',recoveryMethod:'clone'})";
     local mysqlshell="mysqlsh -u${replication_user} -ppassword -h${available_host}"
     out=($(${mysqlshell} --sql -e "SELECT member_host FROM performance_schema.replication_group_members;"))
     echo "_________member_host____${out[@]}-------"
@@ -183,8 +184,19 @@ create_replication_user
 
 # configure innodb cluster
 #what i need is host_name, mysql_root_user , mysql_root_password , mysqlshell command
-#mysqlsh -uheheh -pp -e "dba.configureInstance('heheh@mysql-server-0.mysql-server.test.svc:3306',{password:'p',interactive:false,restart:true});"
+#mysqlsh -uheheh -pp -e "dba.configureInstance('heheh@mysql-server-0.mysql-server.default.svc:3306',{password:'p',interactive:false,restart:true});"
 configure_instance
+
+echo "**************************  need to restart mysqld"
+
+#  ERROR: Remote restart of MySQL server failed: MySQL Error 3707 (HY000): Restart server failed (mysqld is not managed by supervisor process).
+
+/entrypoint.sh mysqld --user=root --report-host=$report_host $@ &
+
+pid=$!
+log "INFO" "************************** The process id of mysqld is '$pid'"
+
+wait_for_host_online
 
 ##if restart_required skip the rest?
 
@@ -223,7 +235,7 @@ sleep 10000
 #create_replication_user
 #configure_instance
 #
-#if [[ "${report_host}" = "mysql-server-0.mysql-server.test.svc" ]]
+#if [[ "${report_host}" = "mysql-server-0.mysql-server.default.svc" ]]
 #then
 #  log "info " "${report_host} creating cluster ============================"
 #  create_cluster
