@@ -189,6 +189,8 @@ configure_instance
 
 echo "**************************  need to restart mysqld"
 
+sleep 120
+
 #  ERROR: Remote restart of MySQL server failed: MySQL Error 3707 (HY000): Restart server failed (mysqld is not managed by supervisor process).
 
 /entrypoint.sh mysqld --user=root --report-host=$report_host $@ &
@@ -198,25 +200,21 @@ log "INFO" "************************** The process id of mysqld is '$pid'"
 
 wait_for_host_online
 
-##if restart_required skip the rest?
+# # check for cluster exists
+# log "INFO" "============PRE Checking=============================================== "
+# check_existing_cluster
+# log "INFO" "============post checking=============================================="
 
-# can add a flag  restart_required to omit the execution....
+# log "info" "creating cluster"
+# echo "is in cluster "$is_in_cluster
 
-#check for cluster exists
-#log "INFO" "============PRE Checking=============================================== "
-#check_existing_cluster
-#log "INFO" "============post checking=============================================="
-#
-#log "info" "creating cluster"
-#echo "is in cluster "$is_in_cluster
-#
-##check for if the elements is all ready in cluster
-#if [[ "$is_boostrap_able" -eq "1" ]];then
+# #check for if the elements is all ready in cluster
+# if [[ "$is_boostrap_able" -eq "1" ]];then
 #  echo  "comes heere"
 #  create_cluster
-#else
+# else
 #  join_in_cluster
-#fi
+# fi
 
 log "info" "what's cause problem here "
 log "_____MYSQL______" "$pid"
