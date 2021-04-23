@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -x
+# set -x
 
 script_name=${0##*/}
 
@@ -249,6 +249,7 @@ if [[ "${report_host}" = "mysql-server-0.mysql-server.default.svc" ]]; then
     log "info " "${report_host} creating cluster ============================"
     create_cluster
 else
+    wait_for_primary_host_online
     check_existing_cluster
     join_in_cluster
     log "info" "other servers will be switching to another process .... except the primary"
