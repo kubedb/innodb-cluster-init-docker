@@ -37,6 +37,8 @@ spec:
       labels:
         app: mysql-server
     spec:
+      readinessGates:
+        - conditionType: "mysql/innodb-ready"
       containers:
       - image: heheh13/mysql-server:1.0.1
         imagePullPolicy: IfNotPresent
