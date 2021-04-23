@@ -27,7 +27,6 @@ metadata:
   name: mysql-server
   namespace: "test"
 spec:
-  
   serviceName: "mysql-server"
   replicas: 3
   selector:
@@ -54,7 +53,7 @@ spec:
         #   # echo "report_host=mysql-server-$ordinal.mysql-server.demo.svc" >> /etc/my.cnf
         #   # echo "user=root" >> /etc/my.cnf
         #   rhost="mysql-server-$ordinal.mysql-server.$namespace.svc"
-        #   /entrypoint.sh mysqld --user=root --report-host=$rhost        
+        #   /entrypoint.sh mysqld --user=root --report-host=$rhost
         env:
         - name: "MYSQL_ROOT_PASSWORD"
           valueFrom:
@@ -75,7 +74,6 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /var/lib/mysql
-          
   volumeClaimTemplates:
   - metadata:
       name: data

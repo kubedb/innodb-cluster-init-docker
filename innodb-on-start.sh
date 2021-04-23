@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
+
 set -x
+
 script_name=${0##*/}
 
 #report_host the resolve host that each innodb cluster instance report to..
 export report_host="$HOSTNAME.mysql-server.$namespace.svc"
-
-
 
 function timestamp() {
     date +"%Y/%m/%d %T"
@@ -17,9 +17,8 @@ function log() {
     echo "$(timestamp) [$script_name] [$type] $msg"
 }
 
-
 log "INFO" "/entrypoint.sh mysqld --user=root --report-host=$report_host  $@'..."
-/entrypoint.sh mysqld --user=root --report-host=$report_host  $@ &
+/entrypoint.sh mysqld --user=root --report-host=$report_host $@ &
 
 pid=$!
 log "INFO" "The process id of mysqld is '$pid'"
@@ -30,7 +29,7 @@ function retry {
 
     local count=0
     local wait=1
-    echo  "---running command $@-----------"
+    echo "---running command $@-----------"
     until "$@"; do
         exit="$?"
         if [ $count -lt $retries ]; then
@@ -81,97 +80,95 @@ function wait_for_host_online() {
     retry 120 ${mysql} -N -e "select 1" | awk '{print$1}'
     out=$(${mysql} -N -e "select 1;" | awk '{print$1}')
     if [[ "$out" -eq "0" ]]; then
-      echo "--------------------------------host is online -----------------------"
+        echo "--------------------------------host is online -----------------------"
     fi
     log "-----error from here -----------------"
 
 }
 already_configured=0
 restart_required=1
-function configure_instance(){
+function configure_instance() {
     log "INFO" "configuring instance..........."
     local mysqlshell="mysqlsh -u${replication_user} -ppassword"
     local mysql="mysql -u${replication_user} -ppassword"
-#todo check for is cofigured first ? and set is restart_required=...
+    #todo check for is cofigured first ? and set is restart_required=...
     retry 120 ${mysqlshell} --sql -e "select @@gtid_mode;"
-    gtid=($($mysqlshell --sql -e "select @@gtid_mode;" ))
+    gtid=($($mysqlshell --sql -e "select @@gtid_mode;"))
     echo "gtid -- ${gtid[@]}"
     echo "${gtid[1]}"
-    if [[ "${gtid[1]}" == "ON" ]]
-    then
-      log "info" "---------------$report_host is already_configured-------------"
-      already_configured=1
-      return
+    if [[ "${gtid[1]}" == "ON" ]]; then
+        log "info" "---------------$report_host is already_configured-------------"
+        already_configured=1
+        return
     fi
-    retry 120 ${mysqlshell}  -e "dba.configureInstance('${replication_user}@${report_host}',{password:'password',interactive:false,restart:true});"
+    retry 120 ${mysqlshell} -e "dba.configureInstance('${replication_user}@${report_host}',{password:'password',interactive:false,restart:true});"
     restart_required=1
-#    out = $(${mysql} -e "dba.configureInstance('${replication_user}@${report_host}',{password:'password',interactive:false,restart:true});" | awk '{print$1}')
-#todo check for enforce_gtid_consistency=ON, gtid_mode=ON , server_id = (unique server id or is set?)
-#    wait_for_host_online
-#    log "info" "---------------comes here--------------"
-#    out=$(${mysql} -e "select @@enforce_gtid_consistency")
-#    echo ..............................out $out...........................
+    #    out = $(${mysql} -e "dba.configureInstance('${replication_user}@${report_host}',{password:'password',interactive:false,restart:true});" | awk '{print$1}')
+    #todo check for enforce_gtid_consistency=ON, gtid_mode=ON , server_id = (unique server id or is set?)
+    #    wait_for_host_online
+    #    log "info" "---------------comes here--------------"
+    #    out=$(${mysql} -e "select @@enforce_gtid_consistency")
+    #    echo ..............................out $out...........................
 
-
-        #need to check is cluster instance configured correctly?
+    #need to check is cluster instance configured correctly?
 }
 is_boostrap_able=0
-function check_existing_cluster(){
-#todo need all host from peer finder then loop through
-local hosts=(mysql-server-0.mysql-server.test.svc mysql-server-1.mysql-server.test.svc mysql-server-2.mysql-server.test.svc)
+function check_existing_cluster() {
+    #todo need all host from peer finder then loop through
+    local hosts=(mysql-server-0.mysql-server.test.svc mysql-server-1.mysql-server.test.svc mysql-server-2.mysql-server.test.svc)
 
-for host in ${hosts[@]}; do
-  #ping in each server see is there any cluster..
-  local mysqlshell="mysqlsh -u${replication_user} -ppassword -h${host} --sql"
-  #retry 30 ${mysqlshell} -e "SELECT member_host FROM performance_schema.replication_group_members;"
-#  freaking_out=($(${mysqlshell} -e "SELECT member_host FROM performance_schema.replication_group_members;"))
- log "info" "-u${replication_user} -ppassword -h${host}"
-  out=($(${mysqlshell} -e "SELECT member_host FROM performance_schema.replication_group_members;"))
-#out=($(mysqlsh -u${replication_user} -ppassword -h${ --sql -e "SELECT member_host FROM performance_schema.replication_group_members;"))
+    for host in ${hosts[@]}; do
+        #ping in each server see is there any cluster..
+        local mysqlshell="mysqlsh -u${replication_user} -ppassword -h${host} --sql"
+        #retry 30 ${mysqlshell} -e "SELECT member_host FROM performance_schema.replication_group_members;"
+        #  freaking_out=($(${mysqlshell} -e "SELECT member_host FROM performance_schema.replication_group_members;"))
+        log "info" "-u${replication_user} -ppassword -h${host}"
+        out=($(${mysqlshell} -e "SELECT member_host FROM performance_schema.replication_group_members;"))
+        #out=($(mysqlsh -u${replication_user} -ppassword -h${ --sql -e "SELECT member_host FROM performance_schema.replication_group_members;"))
 
-  echo "-------------from check_existing_cluster------------------${out[@]}------------------------------end----"
-  cluster_size=${#out[@]}
-  echo
-  if [[ "$cluster_size" -ge "1" ]]; then
-    available_host=${out[1]}
-    echo "----------------available ${out[1]}--------"
-    is_boostrap_able=0;
-    break
-  else
-    is_boostrap_able=1
-  fi
-  echo "_____________host_is_in_cluster" $host " is_boostrap_able"$is_boostrap_able "-----------------------------"
-done
+        echo "-------------from check_existing_cluster------------------${out[@]}------------------------------end----"
+        cluster_size=${#out[@]}
+        echo
+        if [[ "$cluster_size" -ge "1" ]]; then
+            available_host=${out[1]}
+            echo "----------------available ${out[1]}--------"
+            is_boostrap_able=0
+            break
+        else
+            is_boostrap_able=1
+        fi
+        echo "_____________host_is_in_cluster" $host " is_boostrap_able"$is_boostrap_able "-----------------------------"
+    done
 }
 function create_cluster() {
-#  mysqlsh -uheheh -pp -hmysql-server-0.mysql-server.test.svc -e "cluster=dba.createCluster('mycluster',{exitStateAction:'OFFLINE_MODE',autoRejoinTries:'20',consistency:'BEFORE_ON_PRIMARY_FAILOVER'});"
+    #  mysqlsh -uheheh -pp -hmysql-server-0.mysql-server.test.svc -e "cluster=dba.createCluster('mycluster',{exitStateAction:'OFFLINE_MODE',autoRejoinTries:'20',consistency:'BEFORE_ON_PRIMARY_FAILOVER'});"
     #cluster=dba.createCluster("mycluster",{exitStateAction:'OFFLINE_MODE',autoRejoinTries:'20',consistency:'BEFORE_ON_PRIMARY_FAILOVER'});
-   local mysqlshell="mysqlsh -u${replication_user} -ppassword -h${report_host}"
-   retry 30 $mysqlshell -e "cluster=dba.createCluster('mycluster',{exitStateAction:'OFFLINE_MODE',autoRejoinTries:'20',consistency:'BEFORE_ON_PRIMARY_FAILOVER'});"
-   local  mysql="mysql -urepl -ppassword -hmysql-server-0.mysql-server.test.svc"
-   freaking_out=$( ${mysql} -N -e 'SELECT member_host FROM performance_schema.replication_group_members;')
-   echo "cluster freaking_out" $freaking_out
+    local mysqlshell="mysqlsh -u${replication_user} -ppassword -h${report_host}"
+    retry 30 $mysqlshell -e "cluster=dba.createCluster('mycluster',{exitStateAction:'OFFLINE_MODE',autoRejoinTries:'20',consistency:'BEFORE_ON_PRIMARY_FAILOVER'});"
+    local mysql="mysql -urepl -ppassword -hmysql-server-0.mysql-server.test.svc"
+    freaking_out=$(${mysql} -N -e 'SELECT member_host FROM performance_schema.replication_group_members;')
+    echo "cluster freaking_out" $freaking_out
 }
 available_host="not_found_for_now"
 
 function join_in_cluster() {
-  log "info " "join_in_cluster $report_host"
-  #mysqlsh -uheheh -pp -hmysql-server-0.mysql-server.test.svc -e "cluster = dba.getCluster();cluster.addInstance('heheh@mysql-server-2.mysql-server.test.svc:3306',{password:'p',recoveryMethod:'clone'})";
-  local  mysqlshell="mysqlsh -u${replication_user} -ppassword -h${available_host}"
-  out=($(${mysqlshell} --sql -e "SELECT member_host FROM performance_schema.replication_group_members;"))
-  echo "_________member_host____${out[@]}-------"
-  cluster_size=${#out[@]}
-  if [["$cluster_size" -ge "1" ]];then
-    echo "$report_host is already in cluster"
-    retun
-  fi
-  wait_for_host_online
-  retry 10 ${mysqlshell} -e "cluster = dba.getCluster();cluster.addInstance('${replication_user}@${report_host}',{password:'password',recoveryMethod:'clone'});"
-  add=($(${mysqlshell} -e "cluster = dba.getCluster();cluster.addInstance('${replication_user}@${report_host}',{password:'password',recoveryMethod:'clone'});"))
-  echo "-------------------------add = ${add[@]}--------------------------------------------------------"
-  echo "------join--------$out--- ---${out[@]}-join-------"
-  out=($(${mysqlshell} --sql -e "SELECT member_host FROM performance_schema.replication_group_members;"))
-  echo "_________member_host____${out[@]}-------"
+    log "info " "join_in_cluster $report_host"
+    #mysqlsh -uheheh -pp -hmysql-server-0.mysql-server.test.svc -e "cluster = dba.getCluster();cluster.addInstance('heheh@mysql-server-2.mysql-server.test.svc:3306',{password:'p',recoveryMethod:'clone'})";
+    local mysqlshell="mysqlsh -u${replication_user} -ppassword -h${available_host}"
+    out=($(${mysqlshell} --sql -e "SELECT member_host FROM performance_schema.replication_group_members;"))
+    echo "_________member_host____${out[@]}-------"
+    cluster_size=${#out[@]}
+    if [["$cluster_size" -ge "1" ]]; then
+        echo "$report_host is already in cluster"
+        retun
+    fi
+    wait_for_host_online
+    retry 10 ${mysqlshell} -e "cluster = dba.getCluster();cluster.addInstance('${replication_user}@${report_host}',{password:'password',recoveryMethod:'clone'});"
+    add=($(${mysqlshell} -e "cluster = dba.getCluster();cluster.addInstance('${replication_user}@${report_host}',{password:'password',recoveryMethod:'clone'});"))
+    echo "-------------------------add = ${add[@]}--------------------------------------------------------"
+    echo "------join--------$out--- ---${out[@]}-join-------"
+    out=($(${mysqlshell} --sql -e "SELECT member_host FROM performance_schema.replication_group_members;"))
+    echo "_________member_host____${out[@]}-------"
 
 }
 #create user..
@@ -183,7 +180,6 @@ export mysql_header="mysql -u ${MYSQL_ROOT_USERNAME} -hlocalhost -p${MYSQL_ROOT_
 echo "----------------------------------$mysql_header----------------------------------------"
 
 create_replication_user
-
 
 # configure innodb cluster
 #what i need is host_name, mysql_root_user , mysql_root_password , mysqlshell command
@@ -210,11 +206,9 @@ configure_instance
 #  join_in_cluster
 #fi
 
-
-
 log "info" "what's cause problem here "
 log "info" "$pid"
-wait $pid
+# wait $pid
 log "INFO" "The process id of mysqld is '$pid'"
 sleep 10000
 #kill -15 $pid
