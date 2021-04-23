@@ -216,53 +216,53 @@ log "info" "what's cause problem here "
 log "info" "$pid"
 wait $pid
 log "INFO" "The process id of mysqld is '$pid'"
-
-kill -15 $pid
-
-echo "==================================================================================================================================================="
-/entrypoint.sh mysqld --user=root --report-host=$report_host  $@ &
-
-pid=$!
-echo "enter for second time ..."
-log "INFO" "The process id of mysqld is '$pid'"
-
-create_replication_user
-configure_instance
-
-if [[ "${report_host}" = "mysql-server-0.mysql-server.test.svc" ]]
-then
-  log "info " "${report_host} creating cluster ============================"
-  create_cluster
-else
-
-  check_existing_cluster
-  join_in_cluster
-  log "info" "other servers will be switching to another process .... except the primary"
-fi
-
-wait $pid
-log "info" "-----------------is pid = $pid still running -------------------------------------------"
-sleep 
-kill  -15 $pid
-
-/entrypoint.sh mysqld --user=root --report-host=$report_host  $@ &
-
-
-pid=$!
-echo "==================================================================================================================================================="
-echo "entering for third time.............."
-log "INFO" "The process id of mysqld is '$pid'"
-
+sleep 10000
+#kill -15 $pid
+#
+#echo "==================================================================================================================================================="
+#/entrypoint.sh mysqld --user=root --report-host=$report_host  $@ &
+#
+#pid=$!
+#echo "enter for second time ..."
+#log "INFO" "The process id of mysqld is '$pid'"
+#
 #create_replication_user
 #configure_instance
-#check_existing_cluster
-#echo is_boostrap_able "----"
-##if [[ "$is_boostrap_able" -eq "1" ]];then
-##  echo  "comes heere"
-##  create_cluster
-##else
-##  join_in_cluster
-##fi
-#every thing should be okay by now
-
-wait $pid
+#
+#if [[ "${report_host}" = "mysql-server-0.mysql-server.test.svc" ]]
+#then
+#  log "info " "${report_host} creating cluster ============================"
+#  create_cluster
+#else
+#
+#  check_existing_cluster
+#  join_in_cluster
+#  log "info" "other servers will be switching to another process .... except the primary"
+#fi
+#
+#wait $pid
+#log "info" "-----------------is pid = $pid still running -------------------------------------------"
+#
+#kill  -15 $pid
+#
+#/entrypoint.sh mysqld --user=root --report-host=$report_host  $@ &
+#
+#
+#pid=$!
+#echo "==================================================================================================================================================="
+#echo "entering for third time.............."
+#log "INFO" "The process id of mysqld is '$pid'"
+#
+##create_replication_user
+##configure_instance
+##check_existing_cluster
+##echo is_boostrap_able "----"
+###if [[ "$is_boostrap_able" -eq "1" ]];then
+###  echo  "comes heere"
+###  create_cluster
+###else
+###  join_in_cluster
+###fi
+##every thing should be okay by now
+#
+#wait $pid
