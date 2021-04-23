@@ -207,9 +207,9 @@ configure_instance
 #fi
 
 log "info" "what's cause problem here "
-log "info" "$pid"
+log "_____MYSQL______" "$pid"
 # wait $pid
-log "INFO" "The process id of mysqld is '$pid'"
+# log "INFO" "The process id of mysqld is '$pid'"
 sleep 10000
 #kill -15 $pid
 #
