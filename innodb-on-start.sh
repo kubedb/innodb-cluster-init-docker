@@ -175,10 +175,14 @@ function join_in_cluster() {
         retun
     fi
     wait_for_primary_host_online
-    retry 10 ${mysqlshell} -e "cluster = dba.getCluster();cluster.addInstance('${replication_user}@${report_host}',{password:'password',recoveryMethod:'clone'});"
-    add=($(${mysqlshell} -e "cluster = dba.getCluster();cluster.addInstance('${replication_user}@${report_host}',{password:'password',recoveryMethod:'clone'});"))
-    echo "-------------------------add = ${add[@]}--------------------------------------------------------"
-    echo "------join--------$out--- ---${out[@]}-join-------"
+    ${mysqlshell} -e "cluster = dba.getCluster();cluster.addInstance('${replication_user}@${report_host}',{password:'password',recoveryMethod:'clone'});"
+
+    # MySQL can't restart itself inside Docker image. So, we restart it directly.
+    /entrypoint.sh mysqld --user=root --report-host=$report_host $@ &
+    pid=$!
+    log "INFO" "************************** The process id of mysqld is '$pid'"
+    wait_for_host_online
+
     out=($(${mysqlshell} --sql -e "SELECT member_host FROM performance_schema.replication_group_members;"))
     echo "_________member_host____${out[@]}-------"
 
@@ -254,6 +258,18 @@ else
     join_in_cluster
     log "info" "other servers will be switching to another process .... except the primary"
 fi
+
+# idea for fixing
+
+# retry_until_successful{
+#   start_self_if_not_running
+#   wait_until_self_running
+#   check_existing_cluster
+#   if join_in_cluster_no_try = success {
+#       restart_self
+#       break
+#   }
+# }
 
 sleep 10000
 
