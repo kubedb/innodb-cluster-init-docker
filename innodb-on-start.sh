@@ -77,7 +77,7 @@ function create_replication_user() {
 
 function wait_for_host_online() {
     log "INFO" "checking for host to come online..................................................."
-    local mysql="mysql -uroot -ppass"  # "mysql -uroot -ppass -hmysql-server-0.mysql-server.default.svc"
+    local mysql="mysql -uroot -ppass" # "mysql -uroot -ppass -hmysql-server-0.mysql-server.default.svc"
     retry 120 ${mysql} -N -e "select 1;" | awk '{print$1}'
     out=$(${mysql} -N -e "select 1;" | awk '{print$1}')
     if [[ "$out" -eq "0" ]]; then
@@ -88,7 +88,7 @@ function wait_for_host_online() {
 
 function wait_for_primary_host_online() {
     log "INFO" "checking for host to come online..................................................."
-    local mysql="mysql -u${replication_user} -ppassword -hmysql-server-0.mysql-server.default.svc"  # "mysql -uroot -ppass -hmysql-server-0.mysql-server.default.svc"
+    local mysql="mysql -u${replication_user} -ppassword -hmysql-server-0.mysql-server.default.svc" # "mysql -uroot -ppass -hmysql-server-0.mysql-server.default.svc"
     retry 120 ${mysql} -N -e "select 1;" | awk '{print$1}'
     out=$(${mysql} -N -e "select 1;" | awk '{print$1}')
     if [[ "$out" -eq "0" ]]; then
@@ -245,16 +245,14 @@ log "_____MYSQL______" "$pid"
 #configure_instance
 #
 
-if [[ "${report_host}" = "mysql-server-0.mysql-server.default.svc" ]]
-then
- log "info " "${report_host} creating cluster ============================"
- create_cluster
+if [[ "${report_host}" = "mysql-server-0.mysql-server.default.svc" ]]; then
+    log "info " "${report_host} creating cluster ============================"
+    create_cluster
 else
- check_existing_cluster
- join_in_cluster
- log "info" "other servers will be switching to another process .... except the primary"
+    check_existing_cluster
+    join_in_cluster
+    log "info" "other servers will be switching to another process .... except the primary"
 fi
-
 
 sleep 10000
 
