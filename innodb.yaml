@@ -20,6 +20,7 @@ spec:
   selector:
     app: mysql-server
   clusterIP: None
+  publishNotReadyAddresses: true
 ---
 apiVersion: apps/v1
 kind: StatefulSet
