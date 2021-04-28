@@ -1,4 +1,7 @@
 FROM mysql/mysql-server:8.0.23
+#failure: repodata/repomd.xml from mysql80-server-minimal: [Errno 256] No more mirrors to try.
+#RUN yum --disablerepo=mysql80-server-minimal ...
+RUN yum-config-manager --disable mysql80-server-minimal
 
 RUN yum install -y procps psmisc net-tools
 
