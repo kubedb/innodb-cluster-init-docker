@@ -1,3 +1,4 @@
+#secret
 apiVersion: v1
 kind: Secret
 metadata:
@@ -7,7 +8,6 @@ type: Opaque
 data:
   MYSQL_ROOT_PASSWORD: cGFzcw==
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -40,10 +40,31 @@ spec:
     spec:
       readinessGates:
         - conditionType: "mysql/innodb-ready"
+      initContainers:
+      - name: innodb-init
+        image: heheh13/innodb-init-container:1.0.0
+        imagePullPolicy: IfNotPresent
+        command:
+          - "/bin/bash"
+          - "-c"
+          - "/init-script/run.sh"
+        volumeMounts:
+          - name: "data"
+            mountPath: "/var/lib/mysql"
+          - name: "init-scripts"
+            mountPath: "/scripts"
+# is it redundant in code?
+#what happend is its override the /tmp/scripts?
+#          - name: "tmp"
+#            mountPath: "/tmp/scripts/"
       containers:
-      - image: heheh13/mysql-server:1.0.1
+      - image: mysql/mysql-server:8.0.23
         imagePullPolicy: IfNotPresent
         name: mysql-server
+        command:
+          - "/bin/bash"
+          - "-c"
+          - "/scripts/innodb-on-start.sh"
         # args: ["--user=root"]
         # args:
         # - sh
@@ -75,8 +96,19 @@ spec:
         - containerPort: 3306
           name: mysql
         volumeMounts:
-        - name: data
-          mountPath: /var/lib/mysql
+          - name: "data"
+            mountPath: "/var/lib/mysql"
+          - name: "init-scripts"
+            mountPath: "/scripts"
+# is it redundant in code?
+#          - name: "tmp"
+#            mountPath: "/tmp"
+      volumes:
+        - name: "init-scripts"
+          emptyDir: {}
+        - name : "tmp"
+          emptyDir: {}
+
   volumeClaimTemplates:
   - metadata:
       name: data
