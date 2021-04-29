@@ -1,4 +1,3 @@
-
 FROM tianon/toybox:0.8.4
 
 COPY peer-finder /tmp/scripts/peer-finder

@@ -17,6 +17,23 @@ function log() {
     echo "$(timestamp) [$script_name] [$type] $msg"
 }
 
+# get the host names from stdin sent by peer-finder program
+cur_hostname=$report_host
+export cur_host=
+log "INFO" "Reading standard input..."
+while read -ra line; do
+    if [[ "${line}" == *"${cur_hostname}"* ]]; then
+        #    cur_host="$line"
+        cur_host=$(echo -n ${line} | sed -e "s/.svc.cluster.local//g")
+        log "INFO" "I am $cur_host"
+    fi
+    #  peers=("${peers[@]}" "$line")
+    tmp=$(echo -n ${line} | sed -e "s/.svc.cluster.local//g")
+    peers=("${peers[@]}" "$tmp")
+
+done
+log "INFO" "Trying to start group with peers'${peers[*]}'"
+
 function retry {
     local retries="$1"
     shift
@@ -75,7 +92,7 @@ function wait_for_host_online() {
     #want to check from shell
     #seems like shell takes more time to get ready..
     local mysqlshell="mysql -u$1 -h$2 -p$3" # "mysql -uroot -ppass -hmysql-server-0.mysql-server.default.svc"
-    retry 900 ${mysqlshell} -N -e "select 1;"| awk '{print$1}'
+    retry 900 ${mysqlshell} -N -e "select 1;" | awk '{print$1}'
 
     out=$(${mysqlshell} -N -e "select 1;" | awk '{print$1}')
     if [[ "$out" == "1" ]]; then
@@ -89,8 +106,8 @@ function wait_for_host_online() {
 primary="not_found"
 function select_primary() {
     #need hosts from peer finder
-    local hosts=(mysql-server-0.mysql-server.default.svc mysql-server-1.mysql-server.default.svc mysql-server-2.mysql-server.default.svc)
-    for host in "${hosts[@]}"; do
+    #local hosts=(mysql-server-0.mysql-server.default.svc mysql-server-1.mysql-server.default.svc mysql-server-2.mysql-server.default.svc)
+    for host in "${peers[@]}"; do
         local mysqlshell="mysqlsh -u${replication_user} -h${host} -ppassword"
         #result of the query output "member_host host_name" in this format
         selected_primary=($($mysqlshell --sql -e "SELECT member_host FROM performance_schema.replication_group_members where member_role = 'PRIMARY' ;"))
@@ -104,6 +121,7 @@ function select_primary() {
     done
     echo "--------------------------primary not found----------------------------"
 }
+
 function wait_for_primary_host_online() {
     log "INFO" "checking for host primary ${primary} to come online..................................................."
     #want to check from shell
@@ -118,6 +136,7 @@ function wait_for_primary_host_online() {
         echo "primary host ${primary} failed to come online"
     fi
 }
+
 restart_required=0
 already_configured=0
 function is_configured() {
@@ -157,9 +176,9 @@ function configure_instance() {
     #     start_mysql_demon
     #     echo "why did not come here"
     #
-#    restart_required=1
-#    wait $pid
-#    return
+    #    restart_required=1
+    #    wait $pid
+    #    return
     #    out = $(${mysql} -e "dba.configureInstance('${replication_user}@${report_host}',{password:'password',interactive:false,restart:true});" | awk '{print$1}')
     #todo check for enforce_gtid_consistency=ON, gtid_mode=ON , server_id = (unique server id or is set?)
     #    wait_for_host_online
@@ -174,9 +193,9 @@ is_boostrap_able=0
 available_host="not_found"
 function check_existing_cluster() {
     #todo need all host from peer finder then loop through
-    local hosts=(mysql-server-0.mysql-server.default.svc mysql-server-1.mysql-server.default.svc mysql-server-2.mysql-server.default.svc)
+#    local hosts=(mysql-server-0.mysql-server.default.svc mysql-server-1.mysql-server.default.svc mysql-server-2.mysql-server.default.svc)
 
-    for host in ${hosts[@]}; do
+    for host in ${peers[@]}; do
         if [[ "$host" == "$report_host" ]]; then
             continue
         fi
@@ -238,7 +257,7 @@ function join_in_cluster() {
     #mysqlsh -uheheh -pp -hmysql-server-0.mysql-server.default.svc -e "cluster = dba.getCluster();cluster.addInstance('heheh@mysql-server-2.mysql-server.default.svc:3306',{password:'p',recoveryMethod:'clone'})";
     local mysqlshell="mysqlsh -u${replication_user} -ppassword -h${primary}"
     wait_for_primary_host_online
-#    wait_for_host_online "repl" "$primary" "password"
+    #    wait_for_host_online "repl" "$primary" "password"
     #during a failover a instance need to rejoin
     #rejoin
     retry 5 ${mysqlshell} -e "cluster=dba.getCluster(); cluster.rejoinInstance('${replication_user}@${report_host}',{password:'password'})"
@@ -275,6 +294,7 @@ function dropMetadataSchema() {
 
     retry 3 $mysqlshell -e "dba.dropMetadataSchema({force:true,clearReadOnly:true})"
 }
+
 function reboot_from_completeOutage() {
     local mysqlshell="mysqlsh -u${replication_user} -h${report_host} -ppassword"
     #https://dev.mysql.com/doc/dev/mysqlsh-api-javascript/8.0/classmysqlsh_1_1dba_1_1_dba.html#ac68556e9a8e909423baa47dc3b42aadb
@@ -317,7 +337,7 @@ select_primary
 
 if [[ "$primary" == "not_found" ]]; then
     create_cluster
-    wait_for_host_online  "repl" "$report_host" "password"
+    wait_for_host_online "repl" "$report_host" "password"
 else
     echo "---------------------------host $report_host will join as secondary member ------------------------------"
     join_in_cluster
@@ -325,7 +345,7 @@ else
     /entrypoint.sh mysqld --user=root --report-host=$report_host $@ &
     pid=$!
     log "INFO" "The process id of mysqld is '$pid'"
-    wait_for_host_online  "repl" "$report_host" "password"
+    wait_for_host_online "repl" "$report_host" "password"
     make_sure_instance_join_in_cluster
     #maybe need to re join or something else lets check
 fi
