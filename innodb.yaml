@@ -38,7 +38,7 @@ spec:
       labels:
         app: mysql-server
     spec:
-      serviceAccount: peerfinder
+      serviceAccount: peer-finder
       readinessGates:
         - conditionType: "mysql/innodb-ready"
       initContainers:
@@ -66,7 +66,7 @@ spec:
           - "/bin/bash"
           - "-c"
 #          - "/scripts/peer-finder -ns=default -service=mysql-server -on-start=scripts/innodb-on-start.sh"
-          - "/scripts/peer-finder -ns=default -selector=app:mysql-server -on-start=scripts/innodb-on-start.sh"
+          - "/scripts/peer-finder -address-type=IP -ns=default -selector=app=mysql-server -on-start=scripts/innodb-on-start.sh"
 #        args:
 #          - "-service=mysql-server"
 #          - "-ns=default"

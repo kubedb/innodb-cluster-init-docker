@@ -5,7 +5,7 @@
 script_name=${0##*/}
 
 #report_host the resolve host that each innodb cluster instance report to..
-export report_host="$HOSTNAME.mysql-server.$namespace.svc"
+#export report_host="$HOSTNAME.mysql-server.$namespace.svc"
 
 function timestamp() {
     date +"%Y/%m/%d %T"
@@ -33,6 +33,7 @@ while read -ra line; do
 
 done
 log "INFO" "Trying to start group with peers'${peers[*]}'"
+report_host=$cur_host
 
 function retry {
     local retries="$1"
@@ -193,7 +194,7 @@ is_boostrap_able=0
 available_host="not_found"
 function check_existing_cluster() {
     #todo need all host from peer finder then loop through
-#    local hosts=(mysql-server-0.mysql-server.default.svc mysql-server-1.mysql-server.default.svc mysql-server-2.mysql-server.default.svc)
+    #    local hosts=(mysql-server-0.mysql-server.default.svc mysql-server-1.mysql-server.default.svc mysql-server-2.mysql-server.default.svc)
 
     for host in ${peers[@]}; do
         if [[ "$host" == "$report_host" ]]; then
@@ -291,14 +292,12 @@ function make_sure_instance_join_in_cluster() {
 
 function dropMetadataSchema() {
     #mysqlsh -urepl -hmysql-server-0.mysql-server.default.svc -ppassword -e "dba.dropMetadataSchema({force:true})"
-
     retry 3 $mysqlshell -e "dba.dropMetadataSchema({force:true,clearReadOnly:true})"
 }
 
 function reboot_from_completeOutage() {
     local mysqlshell="mysqlsh -u${replication_user} -h${report_host} -ppassword"
     #https://dev.mysql.com/doc/dev/mysqlsh-api-javascript/8.0/classmysqlsh_1_1dba_1_1_dba.html#ac68556e9a8e909423baa47dc3b42aadb
-
     #can sed type of things to make a list of hosts from the array...
     $mysqlshell -e "dba.rebootClusterFromCompleteOutage('mycluster',{user:'repl',password:'password',rejoinInstances:['mysql-server-0.mysql-server.default.svc', 'mysql-server-1.mysql-server.default.svc', 'mysql-server-2.mysql-server.default.svc']})"
 }
