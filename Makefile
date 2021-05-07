@@ -1,9 +1,9 @@
 SHELL=/bin/bash -o pipefail
 
-REGISTRY ?= heheh13
-BIN      := innodb-init-container
+REGISTRY ?= kubedb
+BIN      := mysql-innodb-init
 IMAGE    := $(REGISTRY)/$(BIN)
-TAG      := 1.0.0
+TAG      := 8.0.24
 
 .PHONY: push
 push: container

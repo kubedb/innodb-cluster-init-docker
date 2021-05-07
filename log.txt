@@ -1,0 +1,599 @@
+I0506 04:37:14.465612       1 log.go:184] FLAG: --alsologtostderr="false"
+I0506 04:37:14.466051       1 log.go:184] FLAG: --audit-log-batch-buffer-size="10000"
+I0506 04:37:14.466139       1 log.go:184] FLAG: --audit-log-batch-max-size="1"
+I0506 04:37:14.466172       1 log.go:184] FLAG: --audit-log-batch-max-wait="0s"
+I0506 04:37:14.466379       1 log.go:184] FLAG: --audit-log-batch-throttle-burst="0"
+I0506 04:37:14.466478       1 log.go:184] FLAG: --audit-log-batch-throttle-enable="false"
+I0506 04:37:14.466560       1 log.go:184] FLAG: --audit-log-batch-throttle-qps="0"
+I0506 04:37:14.466635       1 log.go:184] FLAG: --audit-log-compress="false"
+I0506 04:37:14.466710       1 log.go:184] FLAG: --audit-log-format="json"
+I0506 04:37:14.466787       1 log.go:184] FLAG: --audit-log-maxage="0"
+I0506 04:37:14.466823       1 log.go:184] FLAG: --audit-log-maxbackup="0"
+I0506 04:37:14.466851       1 log.go:184] FLAG: --audit-log-maxsize="0"
+I0506 04:37:14.466878       1 log.go:184] FLAG: --audit-log-mode="blocking"
+I0506 04:37:14.466910       1 log.go:184] FLAG: --audit-log-path="-"
+I0506 04:37:14.466941       1 log.go:184] FLAG: --audit-log-truncate-enabled="false"
+I0506 04:37:14.466974       1 log.go:184] FLAG: --audit-log-truncate-max-batch-size="10485760"
+I0506 04:37:14.467001       1 log.go:184] FLAG: --audit-log-truncate-max-event-size="102400"
+I0506 04:37:14.467032       1 log.go:184] FLAG: --audit-log-version="audit.k8s.io/v1"
+I0506 04:37:14.467062       1 log.go:184] FLAG: --audit-policy-file=""
+I0506 04:37:14.467093       1 log.go:184] FLAG: --audit-webhook-batch-buffer-size="10000"
+I0506 04:37:14.467120       1 log.go:184] FLAG: --audit-webhook-batch-initial-backoff="10s"
+I0506 04:37:14.467149       1 log.go:184] FLAG: --audit-webhook-batch-max-size="400"
+I0506 04:37:14.467181       1 log.go:184] FLAG: --audit-webhook-batch-max-wait="30s"
+I0506 04:37:14.467211       1 log.go:184] FLAG: --audit-webhook-batch-throttle-burst="15"
+I0506 04:37:14.467238       1 log.go:184] FLAG: --audit-webhook-batch-throttle-enable="true"
+I0506 04:37:14.467269       1 log.go:184] FLAG: --audit-webhook-batch-throttle-qps="10"
+I0506 04:37:14.467299       1 log.go:184] FLAG: --audit-webhook-config-file=""
+I0506 04:37:14.467331       1 log.go:184] FLAG: --audit-webhook-initial-backoff="10s"
+I0506 04:37:14.467358       1 log.go:184] FLAG: --audit-webhook-mode="batch"
+I0506 04:37:14.467403       1 log.go:184] FLAG: --audit-webhook-truncate-enabled="false"
+I0506 04:37:14.467419       1 log.go:184] FLAG: --audit-webhook-truncate-max-batch-size="10485760"
+I0506 04:37:14.467428       1 log.go:184] FLAG: --audit-webhook-truncate-max-event-size="102400"
+I0506 04:37:14.467437       1 log.go:184] FLAG: --audit-webhook-version="audit.k8s.io/v1"
+I0506 04:37:14.467445       1 log.go:184] FLAG: --authentication-kubeconfig=""
+I0506 04:37:14.467453       1 log.go:184] FLAG: --authentication-skip-lookup="false"
+I0506 04:37:14.467469       1 log.go:184] FLAG: --authentication-token-webhook-cache-ttl="***REDACTED***"
+I0506 04:37:14.467477       1 log.go:184] FLAG: --authentication-tolerate-lookup-failure="false"
+I0506 04:37:14.467505       1 log.go:184] FLAG: --authorization-always-allow-paths="[/healthz,/readyz,/livez]"
+I0506 04:37:14.467513       1 log.go:184] FLAG: --authorization-kubeconfig=""
+I0506 04:37:14.467521       1 log.go:184] FLAG: --authorization-webhook-cache-authorized-ttl="10s"
+I0506 04:37:14.467530       1 log.go:184] FLAG: --authorization-webhook-cache-unauthorized-ttl="10s"
+I0506 04:37:14.467540       1 log.go:184] FLAG: --bind-address="0.0.0.0"
+I0506 04:37:14.467549       1 log.go:184] FLAG: --burst="1000000"
+I0506 04:37:14.467557       1 log.go:184] FLAG: --bypass-validating-webhook-xray="false"
+I0506 04:37:14.467566       1 log.go:184] FLAG: --cert-dir="apiserver.local.config/certificates"
+I0506 04:37:14.467574       1 log.go:184] FLAG: --client-ca-file=""
+I0506 04:37:14.467583       1 log.go:184] FLAG: --contention-profiling="false"
+I0506 04:37:14.467590       1 log.go:184] FLAG: --egress-selector-config-file=""
+I0506 04:37:14.467606       1 log.go:184] FLAG: --enable-analytics="true"
+I0506 04:37:14.467624       1 log.go:184] FLAG: --enable-mutating-webhook="true"
+I0506 04:37:14.467632       1 log.go:184] FLAG: --enable-swagger-ui="false"
+I0506 04:37:14.467640       1 log.go:184] FLAG: --enable-validating-webhook="true"
+I0506 04:37:14.467648       1 log.go:184] FLAG: --help="false"
+I0506 04:37:14.467656       1 log.go:184] FLAG: --http2-max-streams-per-connection="1000"
+I0506 04:37:14.467663       1 log.go:184] FLAG: --kubeconfig=""
+I0506 04:37:14.467680       1 log.go:184] FLAG: --label-key-blacklist="[app.kubernetes.io/name,app.kubernetes.io/version,app.kubernetes.io/instance,app.kubernetes.io/managed-by]"
+I0506 04:37:14.467700       1 log.go:184] FLAG: --license-file="/var/run/secrets/appscode/license/key.txt"
+I0506 04:37:14.467713       1 log.go:184] FLAG: --log-flush-frequency="5s"
+I0506 04:37:14.467724       1 log.go:184] FLAG: --log_backtrace_at=":0"
+I0506 04:37:14.467732       1 log.go:184] FLAG: --log_dir=""
+I0506 04:37:14.467740       1 log.go:184] FLAG: --logtostderr="false"
+I0506 04:37:14.467748       1 log.go:184] FLAG: --permit-address-sharing="false"
+I0506 04:37:14.467758       1 log.go:184] FLAG: --permit-port-sharing="false"
+I0506 04:37:14.467767       1 log.go:184] FLAG: --profiling="true"
+I0506 04:37:14.467776       1 log.go:184] FLAG: --qps="1e+06"
+I0506 04:37:14.467793       1 log.go:184] FLAG: --readiness-probe-interval="10s"
+I0506 04:37:14.467809       1 log.go:184] FLAG: --requestheader-allowed-names="[]"
+I0506 04:37:14.467817       1 log.go:184] FLAG: --requestheader-client-ca-file=""
+I0506 04:37:14.467834       1 log.go:184] FLAG: --requestheader-extra-headers-prefix="[x-remote-extra-]"
+I0506 04:37:14.467855       1 log.go:184] FLAG: --requestheader-group-headers="[x-remote-group]"
+I0506 04:37:14.467870       1 log.go:184] FLAG: --requestheader-username-headers="[x-remote-user]"
+I0506 04:37:14.467879       1 log.go:184] FLAG: --resync-period="10m0s"
+I0506 04:37:14.467891       1 log.go:184] FLAG: --secure-port="8443"
+I0506 04:37:14.467900       1 log.go:184] FLAG: --stderrthreshold="0"
+I0506 04:37:14.467912       1 log.go:184] FLAG: --tls-cert-file="/var/serving-cert/tls.crt"
+I0506 04:37:14.467931       1 log.go:184] FLAG: --tls-cipher-suites="[]"
+I0506 04:37:14.467944       1 log.go:184] FLAG: --tls-min-version=""
+I0506 04:37:14.467952       1 log.go:184] FLAG: --tls-private-key-file="/var/serving-cert/tls.key"
+I0506 04:37:14.467961       1 log.go:184] FLAG: --tls-sni-cert-key="[]"
+I0506 04:37:14.467968       1 log.go:184] FLAG: --use-kubeapiserver-fqdn-for-aks="true"
+I0506 04:37:14.467977       1 log.go:184] FLAG: --v="3"
+I0506 04:37:14.467987       1 log.go:184] FLAG: --vmodule=""
+I0506 04:37:14.686153       1 run.go:41] Starting mysql-server...
+I0506 04:37:16.474294       1 controller.go:60] Initializing StatefulSet watcher.....
+I0506 04:37:16.484410       1 lib.go:204] Kubernetes version: &version.Info{Major:"1", Minor:"20", GitVersion:"v1.20.2", GitCommit:"faecb196815e248d3ecfb03c680a4507229c2a56", GitTreeState:"clean", BuildDate:"2021-01-21T01:11:42Z", GoVersion:"go1.15.5", Compiler:"gc", Platform:"linux/amd64"}
+I0506 04:37:16.538648       1 controller.go:104] Ensuring CustomResourceDefinition...
+W0506 04:37:20.572897       1 warnings.go:70] admissionregistration.k8s.io/v1beta1 MutatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 MutatingWebhookConfiguration
+W0506 04:37:20.575666       1 warnings.go:70] admissionregistration.k8s.io/v1beta1 MutatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 MutatingWebhookConfiguration
+W0506 04:37:20.586234       1 warnings.go:70] admissionregistration.k8s.io/v1beta1 MutatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 MutatingWebhookConfiguration
+W0506 04:37:20.588937       1 warnings.go:70] admissionregistration.k8s.io/v1beta1 ValidatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 ValidatingWebhookConfiguration
+W0506 04:37:20.590886       1 warnings.go:70] admissionregistration.k8s.io/v1beta1 ValidatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 ValidatingWebhookConfiguration
+W0506 04:37:20.598781       1 warnings.go:70] admissionregistration.k8s.io/v1beta1 ValidatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 ValidatingWebhookConfiguration
+I0506 04:37:20.603930       1 lib.go:221] License verification skipped
+I0506 04:37:20.604887       1 controller.go:149] Starting KubeDB controller
+W0506 04:37:20.606906       1 warnings.go:70] admissionregistration.k8s.io/v1beta1 ValidatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 ValidatingWebhookConfiguration
+W0506 04:37:20.608704       1 warnings.go:70] admissionregistration.k8s.io/v1beta1 ValidatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 ValidatingWebhookConfiguration
+W0506 04:37:20.608830       1 warnings.go:70] admissionregistration.k8s.io/v1beta1 MutatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 MutatingWebhookConfiguration
+W0506 04:37:20.611841       1 warnings.go:70] admissionregistration.k8s.io/v1beta1 MutatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 MutatingWebhookConfiguration
+I0506 04:37:20.613129       1 secure_serving.go:197] Serving securely on [::]:8443
+I0506 04:37:20.613686       1 requestheader_controller.go:169] Starting RequestHeaderAuthRequestController
+I0506 04:37:20.613702       1 shared_informer.go:240] Waiting for caches to sync for RequestHeaderAuthRequestController
+I0506 04:37:20.613725       1 dynamic_serving_content.go:130] Starting serving-cert::/var/serving-cert/tls.crt::/var/serving-cert/tls.key
+I0506 04:37:20.613749       1 tlsconfig.go:240] Starting DynamicServingCertificateController
+I0506 04:37:20.619530       1 apf_controller.go:294] Starting API Priority and Fairness config controller
+I0506 04:37:20.648890       1 configmap_cafile_content.go:202] Starting client-ca::kube-system::extension-apiserver-authentication::client-ca-file
+I0506 04:37:20.648967       1 shared_informer.go:240] Waiting for caches to sync for client-ca::kube-system::extension-apiserver-authentication::client-ca-file
+I0506 04:37:20.649247       1 configmap_cafile_content.go:202] Starting client-ca::kube-system::extension-apiserver-authentication::requestheader-client-ca-file
+I0506 04:37:20.649347       1 shared_informer.go:240] Waiting for caches to sync for client-ca::kube-system::extension-apiserver-authentication::requestheader-client-ca-file
+W0506 04:37:20.696923       1 warnings.go:70] apiregistration.k8s.io/v1beta1 APIService is deprecated in v1.19+, unavailable in v1.22+; use apiregistration.k8s.io/v1 APIService
+I0506 04:37:20.705509       1 health.go:56] Starting MySQL health checker...
+I0506 04:37:20.705571       1 util.go:213] Looking for the Stash operator.......
+I0506 04:37:20.715853       1 shared_informer.go:247] Caches are synced for RequestHeaderAuthRequestController 
+I0506 04:37:20.726685       1 apf_controller.go:299] Running API Priority and Fairness config worker
+I0506 04:37:20.749078       1 shared_informer.go:247] Caches are synced for client-ca::kube-system::extension-apiserver-authentication::client-ca-file 
+I0506 04:37:20.749508       1 shared_informer.go:247] Caches are synced for client-ca::kube-system::extension-apiserver-authentication::requestheader-client-ca-file 
+W0506 04:37:20.766265       1 warnings.go:70] apiregistration.k8s.io/v1beta1 APIService is deprecated in v1.19+, unavailable in v1.22+; use apiregistration.k8s.io/v1 APIService
+W0506 04:37:20.799683       1 warnings.go:70] apiregistration.k8s.io/v1beta1 APIService is deprecated in v1.19+, unavailable in v1.22+; use apiregistration.k8s.io/v1 APIService
+W0506 04:37:20.851437       1 warnings.go:70] apiregistration.k8s.io/v1beta1 APIService is deprecated in v1.19+, unavailable in v1.22+; use apiregistration.k8s.io/v1 APIService
+W0506 04:37:20.901224       1 warnings.go:70] apiregistration.k8s.io/v1beta1 APIService is deprecated in v1.19+, unavailable in v1.22+; use apiregistration.k8s.io/v1 APIService
+W0506 04:37:20.960838       1 warnings.go:70] apiregistration.k8s.io/v1beta1 APIService is deprecated in v1.19+, unavailable in v1.22+; use apiregistration.k8s.io/v1 APIService
+W0506 04:37:21.005503       1 warnings.go:70] apiregistration.k8s.io/v1beta1 APIService is deprecated in v1.19+, unavailable in v1.22+; use apiregistration.k8s.io/v1 APIService
+W0506 04:37:21.052771       1 warnings.go:70] apiregistration.k8s.io/v1beta1 APIService is deprecated in v1.19+, unavailable in v1.22+; use apiregistration.k8s.io/v1 APIService
+W0506 04:37:21.099858       1 warnings.go:70] apiregistration.k8s.io/v1beta1 APIService is deprecated in v1.19+, unavailable in v1.22+; use apiregistration.k8s.io/v1 APIService
+W0506 04:37:21.150831       1 warnings.go:70] apiregistration.k8s.io/v1beta1 APIService is deprecated in v1.19+, unavailable in v1.22+; use apiregistration.k8s.io/v1 APIService
+W0506 04:37:21.200068       1 warnings.go:70] apiregistration.k8s.io/v1beta1 APIService is deprecated in v1.19+, unavailable in v1.22+; use apiregistration.k8s.io/v1 APIService
+W0506 04:37:21.253146       1 warnings.go:70] apiregistration.k8s.io/v1beta1 APIService is deprecated in v1.19+, unavailable in v1.22+; use apiregistration.k8s.io/v1 APIService
+W0506 04:37:21.302890       1 warnings.go:70] apiregistration.k8s.io/v1beta1 APIService is deprecated in v1.19+, unavailable in v1.22+; use apiregistration.k8s.io/v1 APIService
+W0506 04:37:21.352759       1 warnings.go:70] apiregistration.k8s.io/v1beta1 APIService is deprecated in v1.19+, unavailable in v1.22+; use apiregistration.k8s.io/v1 APIService
+W0506 04:37:21.404378       1 warnings.go:70] apiregistration.k8s.io/v1beta1 APIService is deprecated in v1.19+, unavailable in v1.22+; use apiregistration.k8s.io/v1 APIService
+I0506 04:37:21.418335       1 xray.go:250] testing ValidatingWebhook using an object with GVR = kubedb.com/v1alpha2, Resource=mysqls
+W0506 04:37:21.457663       1 warnings.go:70] apiregistration.k8s.io/v1beta1 APIService is deprecated in v1.19+, unavailable in v1.22+; use apiregistration.k8s.io/v1 APIService
+W0506 04:43:07.440922       1 warnings.go:70] storage.k8s.io/v1beta1 StorageClass is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 StorageClass
+W0506 04:43:07.467675       1 warnings.go:70] storage.k8s.io/v1beta1 StorageClass is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 StorageClass
+W0506 04:43:07.509215       1 warnings.go:70] storage.k8s.io/v1beta1 StorageClass is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 StorageClass
+W0506 04:43:07.682108       1 warnings.go:70] storage.k8s.io/v1beta1 StorageClass is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 StorageClass
+labels =  map[app.kubernetes.io/component:database app.kubernetes.io/instance:my-group app.kubernetes.io/managed-by:kubedb.com app.kubernetes.io/name:mysqls.kubedb.com]
+.....................container [/scripts/peer-finder]  args  [-address-type=IP -selector=app.kubernetes.io/instance=my-group,app.kubernetes.io/managed-by=kubedb.com,app.kubernetes.io/name=mysqls.kubedb.com -on-start scripts/on-start.sh --binlog-expire-logs-seconds=259200 --innodb-buffer-pool-size=536870912 --loose-group-replication-message-cache-size=268435456] -----------------
+I0506 04:43:07.740194       1 controller.go:113] Started processing, key: demo/my-group
+I0506 04:43:07.758776       1 statefulset.go:73] Successfully created/patched PodDisruptionBudget
+I0506 04:43:07.802453       1 controller.go:113] Started processing, key: demo/my-group
+I0506 04:43:07.806674       1 service.go:232] spec.monitor.agent is not provided by prometheus.io
+W0506 04:43:07.866766       1 warnings.go:70] storage.k8s.io/v1beta1 StorageClass is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 StorageClass
+labels =  map[app.kubernetes.io/component:database app.kubernetes.io/instance:my-group app.kubernetes.io/managed-by:kubedb.com app.kubernetes.io/name:mysqls.kubedb.com]
+.....................container [/scripts/peer-finder]  args  [-address-type=IP -selector=app.kubernetes.io/instance=my-group,app.kubernetes.io/managed-by=kubedb.com,app.kubernetes.io/name=mysqls.kubedb.com -on-start scripts/on-start.sh --binlog-expire-logs-seconds=259200 --innodb-buffer-pool-size=536870912 --loose-group-replication-message-cache-size=268435456] -----------------
+I0506 04:43:07.968877       1 statefulset.go:73] Successfully created/patched PodDisruptionBudget
+I0506 04:43:07.975655       1 service.go:232] spec.monitor.agent is not provided by prometheus.io
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:43:10.791277       1 health.go:112] Host is not online dial tcp: lookup my-group-0.my-group-pods.demo.svc on 10.96.0.10:53: no such host
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:43:10.808521       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+W0506 04:43:10.810873       1 warnings.go:70] storage.k8s.io/v1beta1 StorageClass is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 StorageClass
+labels =  map[app.kubernetes.io/component:database app.kubernetes.io/instance:my-group app.kubernetes.io/managed-by:kubedb.com app.kubernetes.io/name:mysqls.kubedb.com]
+.....................container [/scripts/peer-finder]  args  [-address-type=IP -selector=app.kubernetes.io/instance=my-group,app.kubernetes.io/managed-by=kubedb.com,app.kubernetes.io/name=mysqls.kubedb.com -on-start scripts/on-start.sh --binlog-expire-logs-seconds=259200 --innodb-buffer-pool-size=536870912 --loose-group-replication-message-cache-size=268435456] -----------------
+I0506 04:43:10.853969       1 statefulset.go:73] Successfully created/patched PodDisruptionBudget
+I0506 04:43:10.861808       1 service.go:232] spec.monitor.agent is not provided by prometheus.io
+W0506 04:43:10.868617       1 warnings.go:70] storage.k8s.io/v1beta1 StorageClass is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 StorageClass
+labels =  map[app.kubernetes.io/component:database app.kubernetes.io/instance:my-group app.kubernetes.io/managed-by:kubedb.com app.kubernetes.io/name:mysqls.kubedb.com]
+.....................container [/scripts/peer-finder]  args  [-address-type=IP -selector=app.kubernetes.io/instance=my-group,app.kubernetes.io/managed-by=kubedb.com,app.kubernetes.io/name=mysqls.kubedb.com -on-start scripts/on-start.sh --binlog-expire-logs-seconds=259200 --innodb-buffer-pool-size=536870912 --loose-group-replication-message-cache-size=268435456] -----------------
+I0506 04:43:10.916921       1 statefulset.go:73] Successfully created/patched PodDisruptionBudget
+I0506 04:43:10.926737       1 service.go:232] spec.monitor.agent is not provided by prometheus.io
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:43:20.836644       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:43:20.853511       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:43:31.892117       1 health.go:112] Host is not online dial tcp: lookup my-group-0.my-group-pods.demo.svc on 10.96.0.10:53: no such host
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:43:31.909798       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:43:41.931520       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:43:41.946725       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:43:51.974120       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:43:51.990715       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:44:02.013979       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:44:02.030060       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:44:12.049445       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:44:12.064367       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:44:22.345470       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:44:22.358891       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+W0506 04:44:27.610223       1 warnings.go:70] admissionregistration.k8s.io/v1beta1 ValidatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 ValidatingWebhookConfiguration
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:44:32.400212       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:44:32.421083       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:44:42.441812       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:44:42.457883       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:44:52.481326       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:44:52.497310       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:45:02.522261       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:45:02.536925       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:45:12.558887       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:45:12.576979       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:45:22.598729       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:45:22.614777       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:45:32.662571       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:45:32.678336       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:45:42.704498       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:45:42.719987       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+W0506 04:45:46.613045       1 warnings.go:70] admissionregistration.k8s.io/v1beta1 MutatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 MutatingWebhookConfiguration
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:45:52.741481       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:45:52.763475       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:46:02.789560       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:46:02.808536       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:46:12.827947       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:46:12.841981       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:46:22.859529       1 health.go:112] Host is not online dial tcp 172.19.0.5:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:46:22.874948       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:46:32.895461       1 health.go:112] Host is not online Checking member state, query result is nil
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:46:32.915903       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-0.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-0.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:46:43.010087       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: dial tcp 10.96.169.238:3306: connect: connection refused
+I0506 04:46:43.043244       1 controller.go:113] Started processing, key: demo/my-group
+W0506 04:46:43.137142       1 warnings.go:70] storage.k8s.io/v1beta1 StorageClass is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 StorageClass
+labels =  map[app.kubernetes.io/component:database app.kubernetes.io/instance:my-group app.kubernetes.io/managed-by:kubedb.com app.kubernetes.io/name:mysqls.kubedb.com]
+.....................container [/scripts/peer-finder]  args  [-address-type=IP -selector=app.kubernetes.io/instance=my-group,app.kubernetes.io/managed-by=kubedb.com,app.kubernetes.io/name=mysqls.kubedb.com -on-start scripts/on-start.sh --binlog-expire-logs-seconds=259200 --innodb-buffer-pool-size=536870912 --loose-group-replication-message-cache-size=268435456] -----------------
+I0506 04:46:43.226007       1 statefulset.go:73] Successfully created/patched PodDisruptionBudget
+I0506 04:46:43.231917       1 service.go:232] spec.monitor.agent is not provided by prometheus.io
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-1.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-1.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:46:53.046273       1 health.go:112] Host is not online dial tcp 172.19.0.3:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:46:53.063770       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-1.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-1.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:47:03.088782       1 health.go:112] Host is not online dial tcp 172.19.0.3:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:47:03.104420       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-1.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-1.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:47:13.129447       1 health.go:112] Host is not online dial tcp 172.19.0.3:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:47:13.146341       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+I0506 04:47:20.693083       1 controller.go:113] Started processing, key: demo/my-group
+W0506 04:47:20.720397       1 warnings.go:70] storage.k8s.io/v1beta1 StorageClass is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 StorageClass
+labels =  map[app.kubernetes.io/component:database app.kubernetes.io/instance:my-group app.kubernetes.io/managed-by:kubedb.com app.kubernetes.io/name:mysqls.kubedb.com]
+.....................container [/scripts/peer-finder]  args  [-address-type=IP -selector=app.kubernetes.io/instance=my-group,app.kubernetes.io/managed-by=kubedb.com,app.kubernetes.io/name=mysqls.kubedb.com -on-start scripts/on-start.sh --binlog-expire-logs-seconds=259200 --innodb-buffer-pool-size=536870912 --loose-group-replication-message-cache-size=268435456] -----------------
+I0506 04:47:20.760989       1 statefulset.go:73] Successfully created/patched PodDisruptionBudget
+I0506 04:47:21.202617       1 service.go:232] spec.monitor.agent is not provided by prometheus.io
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-1.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-1.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:47:23.179053       1 health.go:112] Host is not online dial tcp 172.19.0.3:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:47:23.206938       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-1.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-1.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:47:33.241228       1 health.go:112] Host is not online dial tcp 172.19.0.3:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:47:33.256190       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-1.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-1.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:47:43.278646       1 health.go:112] Host is not online dial tcp 172.19.0.3:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:47:43.295861       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-1.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-1.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:47:53.320141       1 health.go:112] Host is not online dial tcp 172.19.0.3:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:47:53.341813       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-1.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-1.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:48:03.372514       1 health.go:112] Host is not online dial tcp 172.19.0.3:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:48:03.388321       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-1.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-1.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:48:13.412436       1 health.go:112] Host is not online dial tcp 172.19.0.3:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:48:13.427817       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-1.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-1.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:48:23.454224       1 health.go:112] Host is not online dial tcp 172.19.0.3:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:48:23.473161       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-1.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-1.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:48:33.493002       1 health.go:112] Host is not online dial tcp 172.19.0.3:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:48:33.515823       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-1.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-1.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:48:43.594562       1 health.go:112] Host is not online dial tcp 172.19.0.3:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:48:43.612054       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-1.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-1.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:48:53.643885       1 health.go:112] Host is not online dial tcp 172.19.0.3:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:48:53.663682       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-1.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-1.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:49:03.693123       1 health.go:112] Host is not online The member is not online yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:49:03.707891       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: All group member are not online yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-1.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-1.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:49:13.854504       1 warnings.go:70] storage.k8s.io/v1beta1 StorageClass is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 StorageClass
+I0506 04:49:13.906265       1 controller.go:113] Started processing, key: demo/my-group
+labels =  map[app.kubernetes.io/component:database app.kubernetes.io/instance:my-group app.kubernetes.io/managed-by:kubedb.com app.kubernetes.io/name:mysqls.kubedb.com]
+.....................container [/scripts/peer-finder]  args  [-address-type=IP -selector=app.kubernetes.io/instance=my-group,app.kubernetes.io/managed-by=kubedb.com,app.kubernetes.io/name=mysqls.kubedb.com -on-start scripts/on-start.sh --binlog-expire-logs-seconds=259200 --innodb-buffer-pool-size=536870912 --loose-group-replication-message-cache-size=268435456] -----------------
+I0506 04:49:13.989480       1 statefulset.go:73] Successfully created/patched PodDisruptionBudget
+I0506 04:49:13.995779       1 service.go:232] spec.monitor.agent is not provided by prometheus.io
+W0506 04:49:14.005696       1 warnings.go:70] storage.k8s.io/v1beta1 StorageClass is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 StorageClass
+labels =  map[app.kubernetes.io/component:database app.kubernetes.io/instance:my-group app.kubernetes.io/managed-by:kubedb.com app.kubernetes.io/name:mysqls.kubedb.com]
+.....................container [/scripts/peer-finder]  args  [-address-type=IP -selector=app.kubernetes.io/instance=my-group,app.kubernetes.io/managed-by=kubedb.com,app.kubernetes.io/name=mysqls.kubedb.com -on-start scripts/on-start.sh --binlog-expire-logs-seconds=259200 --innodb-buffer-pool-size=536870912 --loose-group-replication-message-cache-size=268435456] -----------------
+I0506 04:49:14.066588       1 statefulset.go:73] Successfully created/patched PodDisruptionBudget
+I0506 04:49:14.076335       1 service.go:232] spec.monitor.agent is not provided by prometheus.io
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:49:23.856402       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:49:23.874507       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+W0506 04:49:23.890501       1 warnings.go:70] storage.k8s.io/v1beta1 StorageClass is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 StorageClass
+labels =  map[app.kubernetes.io/component:database app.kubernetes.io/instance:my-group app.kubernetes.io/managed-by:kubedb.com app.kubernetes.io/name:mysqls.kubedb.com]
+.....................container [/scripts/peer-finder]  args  [-address-type=IP -selector=app.kubernetes.io/instance=my-group,app.kubernetes.io/managed-by=kubedb.com,app.kubernetes.io/name=mysqls.kubedb.com -on-start scripts/on-start.sh --binlog-expire-logs-seconds=259200 --innodb-buffer-pool-size=536870912 --loose-group-replication-message-cache-size=268435456] -----------------
+I0506 04:49:23.945453       1 statefulset.go:73] Successfully created/patched PodDisruptionBudget
+I0506 04:49:23.954873       1 service.go:232] spec.monitor.agent is not provided by prometheus.io
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:49:33.899248       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:49:33.915316       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:49:43.944699       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:49:43.962065       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+W0506 04:49:53.612199       1 warnings.go:70] admissionregistration.k8s.io/v1beta1 ValidatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 ValidatingWebhookConfiguration
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:49:53.986135       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:49:54.003804       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:50:04.032946       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:50:04.049101       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:50:14.078851       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:50:14.094385       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:50:24.120549       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:50:24.138967       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:50:34.166322       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:50:34.183495       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:50:44.209926       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:50:44.228456       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:50:54.251909       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:50:54.269788       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:51:04.296164       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:51:04.315118       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+W0506 04:51:14.344581       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:51:14.358749       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:51:24.385793       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:51:24.400791       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+W0506 04:51:27.615022       1 warnings.go:70] admissionregistration.k8s.io/v1beta1 MutatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 MutatingWebhookConfiguration
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:51:34.422057       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:51:34.439284       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:51:44.465559       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:51:44.483283       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:51:54.506620       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:51:54.520861       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:52:04.543630       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:52:04.565577       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:52:14.597023       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:52:14.615652       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:52:24.640646       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:52:24.656088       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:52:34.682071       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:52:34.701632       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:52:44.726375       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:52:44.743428       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:52:54.766337       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:52:54.788449       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:53:04.818156       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:53:04.836331       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:53:14.862371       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:53:14.880980       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:53:24.901548       1 health.go:112] Host is not online dial tcp 172.19.0.2:3306: connect: connection refused
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+E0506 04:53:24.915616       1 health.go:213] MySQL Cluster demo/my-group is not healthy, reason: Not all members have joined into the group yet
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group-2.my-group-pods.demo.svc:3306)/mysql? --DNS--------> my-group-2.my-group-pods.demo.svc ----Port----> 3306 ----TLS--- 
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+I0506 04:53:35.059695       1 controller.go:113] Started processing, key: demo/my-group
+W0506 04:53:35.096161       1 warnings.go:70] storage.k8s.io/v1beta1 StorageClass is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 StorageClass
+labels =  map[app.kubernetes.io/component:database app.kubernetes.io/instance:my-group app.kubernetes.io/managed-by:kubedb.com app.kubernetes.io/name:mysqls.kubedb.com]
+.....................container [/scripts/peer-finder]  args  [-address-type=IP -selector=app.kubernetes.io/instance=my-group,app.kubernetes.io/managed-by=kubedb.com,app.kubernetes.io/name=mysqls.kubedb.com -on-start scripts/on-start.sh --binlog-expire-logs-seconds=259200 --innodb-buffer-pool-size=536870912 --loose-group-replication-message-cache-size=268435456] -----------------
+I0506 04:53:35.167289       1 statefulset.go:73] Successfully created/patched PodDisruptionBudget
+I0506 04:53:35.173483       1 service.go:232] spec.monitor.agent is not provided by prometheus.io
+W0506 04:53:35.182110       1 warnings.go:70] storage.k8s.io/v1beta1 StorageClass is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 StorageClass
+labels =  map[app.kubernetes.io/component:database app.kubernetes.io/instance:my-group app.kubernetes.io/managed-by:kubedb.com app.kubernetes.io/name:mysqls.kubedb.com]
+.....................container [/scripts/peer-finder]  args  [-address-type=IP -selector=app.kubernetes.io/instance=my-group,app.kubernetes.io/managed-by=kubedb.com,app.kubernetes.io/name=mysqls.kubedb.com -on-start scripts/on-start.sh --binlog-expire-logs-seconds=259200 --innodb-buffer-pool-size=536870912 --loose-group-replication-message-cache-size=268435456] -----------------
+I0506 04:53:35.253768       1 statefulset.go:73] Successfully created/patched PodDisruptionBudget
+I0506 04:53:35.266531       1 service.go:232] spec.monitor.agent is not provided by prometheus.io
+W0506 04:53:35.299271       1 warnings.go:70] storage.k8s.io/v1beta1 StorageClass is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 StorageClass
+labels =  map[app.kubernetes.io/component:database app.kubernetes.io/instance:my-group app.kubernetes.io/managed-by:kubedb.com app.kubernetes.io/name:mysqls.kubedb.com]
+.....................container [/scripts/peer-finder]  args  [-address-type=IP -selector=app.kubernetes.io/instance=my-group,app.kubernetes.io/managed-by=kubedb.com,app.kubernetes.io/name=mysqls.kubedb.com -on-start scripts/on-start.sh --binlog-expire-logs-seconds=259200 --innodb-buffer-pool-size=536870912 --loose-group-replication-message-cache-size=268435456] -----------------
+I0506 04:53:35.348522       1 statefulset.go:73] Successfully created/patched PodDisruptionBudget
+I0506 04:53:35.355297       1 service.go:232] spec.monitor.agent is not provided by prometheus.io
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+-------------------user= root pass= e2wRZNJANraV4U-u err <nil>  -----------------------------------
+Connection String: -------------> root:e2wRZNJANraV4U-u@tcp(my-group.demo.svc:3306)/mysql? --DNS--------> my-group.demo.svc ----Port----> 3306 ----TLS--- 
+W0506 04:55:07.921211       1 warnings.go:70] storage.k8s.io/v1beta1 StorageClass is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 StorageClass
+W0506 04:55:07.941985       1 warnings.go:70] storage.k8s.io/v1beta1 StorageClass is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 StorageClass
+E0506 04:55:07.975487       1 worker.go:92] Failed to process key demo/my-group. Reason: mysqls.kubedb.com "my-group" not found
+I0506 04:55:07.975538       1 worker.go:96] Error syncing key demo/my-group: mysqls.kubedb.com "my-group" not found

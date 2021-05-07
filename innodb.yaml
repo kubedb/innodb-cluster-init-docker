@@ -38,12 +38,29 @@ spec:
       labels:
         app: mysql-server
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: mysql-server
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: mysql-server
+                topologyKey: failure-domain.beta.kubernetes.io/zone
+              weight: 50
+      dnsPolicy: ClusterFirstWithHostNet
+      hostNetwork: true
       serviceAccount: peer-finder
       readinessGates:
         - conditionType: "mysql/innodb-ready"
       initContainers:
       - name: innodb-init
-        image: heheh13/innodb-init-container:1.0.0
+        image: kubedb/mysql-innodb-init:8.0.24
         imagePullPolicy: IfNotPresent
         command:
           - "/bin/bash"
@@ -65,13 +82,13 @@ spec:
         command:
           - "/bin/bash"
           - "-c"
-#          - "/scripts/peer-finder -ns=default -service=mysql-server -on-start=scripts/innodb-on-start.sh"
-          - "/scripts/peer-finder -address-type=IP -ns=default -selector=app=mysql-server -on-start=scripts/innodb-on-start.sh"
+#          - "/scripts/peer-finder -ns=default -service=mysql-server -on-start=scripts/on-start.sh"
+          - "/scripts/peer-finder -address-type=IP -ns=default -selector=app=mysql-server -on-start=scripts/on-start.sh"
 #        args:
 #          - "-service=mysql-server"
 #          - "-ns=default"
-#          - "-on-start=scripts/innodb-on-start.sh"
-##          - "/scripts/innodb-on-start.sh"
+#          - "-on-start=scripts/on-start.sh"
+##          - "/scripts/on-start.sh"
         # args: ["--user=root"]
         # args:
         # - sh

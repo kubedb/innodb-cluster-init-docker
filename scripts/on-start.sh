@@ -17,8 +17,12 @@ function log() {
     echo "$(timestamp) [$script_name] [$type] $msg"
 }
 
+#todo we need a mode detector here
+#for ip,dns maybe ipv4,ipv6
+#maybe we can pass it through peer-finder..
+
 # get the host names from stdin sent by peer-finder program
-cur_hostname=$report_host
+cur_hostname=$POD_IP
 export cur_host=
 log "INFO" "Reading standard input..."
 while read -ra line; do
@@ -73,6 +77,8 @@ function create_replication_user() {
         retry 120 ${mysql} -N -e "SET SQL_LOG_BIN=0;"
         retry 120 ${mysql} -N -e "CREATE USER 'repl'@'%' IDENTIFIED BY 'password' REQUIRE SSL;"
         retry 120 ${mysql} -N -e "GRANT ALL ON *.* TO 'repl'@'%' WITH GRANT OPTION;"
+        retry 120 ${mysql} -N -e "CREATE USER 'root'@'%' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
+        retry 120 ${mysql} -N -e "GRANT ALL ON *.* TO 'root'@'%' WITH GRANT OPTION;"
         #  You must therefore give the `BACKUP_ADMIN` and `CLONE_ADMIN` privilege to this replication user on all group members that support cloning process
         # https://dev.mysql.com/doc/refman/8.0/en/group-replication-cloning.html
         # https://dev.mysql.com/doc/refman/8.0/en/clone-plugin-remote.html
@@ -129,7 +135,7 @@ function wait_for_primary_host_online() {
     #seems like shell takes more time to get ready..
     local mysqlshell="mysql -u${replication_user} -ppassword -h${primary}" # "mysql -uroot -ppass -hmysql-server-0.mysql-server.default.svc"
     retry 900 ${mysqlshell} -N -e "select 1;" | awk '{print$1}'
-    out=$({mysqlshell} -N -e "select 1;" | awk '{print$1}')
+    out=$(${mysqlshell} -N -e "select 1;" | awk '{print$1}')
     echo "-----------------------out = $out-----------------------------"
     if [[ "$out" == "1" ]]; then
         echo "--------------------------------host primary ${primary} is online -----------------------"
@@ -161,7 +167,7 @@ function configure_instance() {
         return
     fi
     #     wait_for_host_online
-    retry 10 ${mysqlshell} -e "dba.configureInstance('${replication_user}@${report_host}',{password:'password',interactive:false,restart:true});"
+    retry 30 ${mysqlshell} -e "dba.configureInstance('${replication_user}@${report_host}',{password:'password',interactive:false,restart:true});"
     wait $pid
     restart_required=1
     #https://serverfault.com/questions/477448/mysql-keeps-crashing-innodb-unable-to-lock-ibdata1-error-11
@@ -235,7 +241,7 @@ function create_cluster() {
 already_in_cluster=0
 function is_already_in_cluster() {
     local mysqlshell="mysqlsh -u${replication_user} -ppassword -h${report_host}"
-    out=($(${mysqlshell} --sql -e "SELECT member_host FROM performance_schema.replication_group_members;"))
+    out=($(${mysqlshell} --sql -e "SELECT member_host FROM performance_schema.replication_group_members where member_state='ONLINE';"))
     echo "_________member_host____${out[@]}-------"
     for host in ${out[@]}; do
         if [[ "$host" == "$report_host" ]]; then
@@ -262,6 +268,7 @@ function join_in_cluster() {
     #during a failover a instance need to rejoin
     #rejoin
     retry 5 ${mysqlshell} -e "cluster=dba.getCluster(); cluster.rejoinInstance('${replication_user}@${report_host}',{password:'password'})"
+    wait_for_host_online "repl" "$report_host" "password"
     is_already_in_cluster
     if [[ "$already_in_cluster" == "1" ]]; then
         #if i return its goes down and restarts the server
@@ -304,7 +311,7 @@ function reboot_from_completeOutage() {
 
 #starting mysqld in back ground
 log "INFO" "/entrypoint.sh mysqld --user=root --report-host=$report_host  $@'..."
-/entrypoint.sh mysqld --user=root --report-host=$report_host $@ &
+/entrypoint.sh mysqld --user=root --report-host=$report_host --bind-address=0.0.0.0 $@ &
 pid=$!
 log "INFO" "The process id of mysqld is '$pid'"
 
@@ -316,7 +323,7 @@ export replication_user_password=password
 export mysql_header="mysql -u ${MYSQL_ROOT_USERNAME} -hlocalhost -p${MYSQL_ROOT_PASSWORD} --port=3306"
 echo "----------------------------------$mysql_header----------------------------------------"
 
-wait_for_host_online "root" "localhost" "pass"
+wait_for_host_online "root" "localhost" "$MYSQL_ROOT_PASSWORD"
 create_replication_user
 #need for when all instances of the cluster goes offline
 #dropMetadataSchema
@@ -326,7 +333,7 @@ configure_instance
 if [[ "$restart_required" == "1" ]]; then
     log "INFO" "after configuration"
     log "INFO" "/entrypoint.sh mysqld --user=root --report-host=$report_host  $@'..."
-    /entrypoint.sh mysqld --user=root --report-host=$report_host $@ &
+    /entrypoint.sh mysqld --user=root --report-host=$report_host --bind-address=0.0.0.0 $@ &
     pid=$!
     log "INFO" "The process id of mysqld is '$pid'"
     wait_for_host_online "repl" "$report_host" "password"
