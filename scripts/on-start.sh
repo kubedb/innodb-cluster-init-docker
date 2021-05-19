@@ -1,8 +1,22 @@
 #!/usr/bin/env bash
 
 #set -x
+# Environment variables passed from Pod env are as follows:
+#
+#   GROUP_NAME          = a uuid treated as the name of the replication group
+#   DB_NAME             = name of the database CR
+#   BASE_NAME           = name of the StatefulSet (same as the name of CRD)
+#   GOV_SVC             = the name of the governing service
+#   POD_NAMESPACE       = the Pods' namespace
+#   MYSQL_ROOT_USERNAME = root user name
+#   MYSQL_ROOT_PASSWORD = root password
+#   HOST_ADDRESS        = Address used to communicate among the peers. This can be fully qualified host name or IPv4 or IPv6
+#   HOST_ADDRESS_TYPE   = Address type of HOST_ADDRESS (one of DNS, IPV4, IPv6)
+#   POD_IP              = IP address used to create whitelist CIDR. For HOST_ADDRESS_TYPE=DNS, it will be status.PodIP.
+#   POD_IP_TYPE         = Address type of POD_IP (one of IPV4, IPv6)
 
 script_name=${0##*/}
+echo "host adress == $HOST_ADDRESS, Host adress type = $HOST_ADDRESS_TYPE"
 
 #report_host the resolve host that each innodb cluster instance report to..
 #export report_host="$HOSTNAME.mysql-server.$namespace.svc"
@@ -33,11 +47,27 @@ while read -ra line; do
     fi
     #  peers=("${peers[@]}" "$line")
     tmp=$(echo -n ${line} | sed -e "s/.svc.cluster.local//g")
+    #      if [[ "$HOST_ADDRESS_TYPE" == "IPv6" ]]; then
+    #        tmp="[$tmp]"
+    #    fi
     peers=("${peers[@]}" "$tmp")
 
 done
+
 log "INFO" "Trying to start group with peers'${peers[*]}'"
-report_host=$cur_host
+#report_host="$cur_host"
+#need to set report host for innodbcluster mode ipv6  ...
+#concepts of aliases
+myhost=$POD_IP
+report_host="yet to set"
+while read -r -u9 line; do
+    pod_ip=$(echo $line | cut -d' ' -f 1)
+    echo $pod_ip
+    if [[ $pod_ip == $myhost ]]; then
+        report_host=$(echo $line | cut -d' ' -f 2)
+        echo $report_host
+    fi
+done 9<'/etc/hosts'
 
 function retry {
     local retries="$1"
@@ -104,9 +134,9 @@ function wait_for_host_online() {
     out=$(${mysqlshell} -N -e "select 1;" | awk '{print$1}')
     if [[ "$out" == "1" ]]; then
         echo "--------------------------------host $2 is online -----------------------"
-    else
-        echo "host $2 failed to come online"
+
     fi
+
 }
 
 #will make it dynamic...
@@ -263,7 +293,10 @@ function join_in_cluster() {
 
     #mysqlsh -uheheh -pp -hmysql-server-0.mysql-server.default.svc -e "cluster = dba.getCluster();cluster.addInstance('heheh@mysql-server-2.mysql-server.default.svc:3306',{password:'p',recoveryMethod:'clone'})";
     local mysqlshell="mysqlsh -u${replication_user} -ppassword -h${primary}"
-    wait_for_primary_host_online
+
+    echo "checking for primary ..............."
+    sleep 5
+    #    wait_for_primary_host_online
     #    wait_for_host_online "repl" "$primary" "password"
     #during a failover a instance need to rejoin
     #rejoin
@@ -299,6 +332,7 @@ function make_sure_instance_join_in_cluster() {
 
 function dropMetadataSchema() {
     #mysqlsh -urepl -hmysql-server-0.mysql-server.default.svc -ppassword -e "dba.dropMetadataSchema({force:true})"
+    local mysqlshell="mysqlsh -u${replication_user} -h${report_host} -ppassword"
     retry 3 $mysqlshell -e "dba.dropMetadataSchema({force:true,clearReadOnly:true})"
 }
 
@@ -311,7 +345,7 @@ function reboot_from_completeOutage() {
 
 #starting mysqld in back ground
 log "INFO" "/entrypoint.sh mysqld --user=root --report-host=$report_host  $@'..."
-/entrypoint.sh mysqld --user=root --report-host=$report_host --bind-address=0.0.0.0 $@ &
+/entrypoint.sh mysqld --user=root --report-host=$report_host --bind-address=* $@ &
 pid=$!
 log "INFO" "The process id of mysqld is '$pid'"
 
@@ -333,13 +367,14 @@ configure_instance
 if [[ "$restart_required" == "1" ]]; then
     log "INFO" "after configuration"
     log "INFO" "/entrypoint.sh mysqld --user=root --report-host=$report_host  $@'..."
-    /entrypoint.sh mysqld --user=root --report-host=$report_host --bind-address=0.0.0.0 $@ &
+    /entrypoint.sh mysqld --user=root --report-host=$report_host --bind-address=* $@ &
     pid=$!
     log "INFO" "The process id of mysqld is '$pid'"
     wait_for_host_online "repl" "$report_host" "password"
 fi
 #check_existing_cluster
 select_primary
+dropMetadataSchema
 
 if [[ "$primary" == "not_found" ]]; then
     create_cluster
@@ -348,7 +383,7 @@ else
     echo "---------------------------host $report_host will join as secondary member ------------------------------"
     join_in_cluster
     log "INFO" "/entrypoint.sh mysqld --user=root --report-host=$report_host  $@'..."
-    /entrypoint.sh mysqld --user=root --report-host=$report_host $@ &
+    /entrypoint.sh mysqld --user=root --report-host=$report_host --bind-address=* $@ &
     pid=$!
     log "INFO" "The process id of mysqld is '$pid'"
     wait_for_host_online "repl" "$report_host" "password"
