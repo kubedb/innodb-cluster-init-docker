@@ -194,9 +194,12 @@ function configure_instance() {
     if [[ "${gtid[1]}" == "ON" ]]; then
         log "info" "---------------$report_host is already_configured-------------"
         already_configured=1
+#        dropMetadataSchema
         return
     fi
+    #todo joining for the the fist time...
     #     wait_for_host_online
+    # todo read password from env?
     retry 30 ${mysqlshell} -e "dba.configureInstance('${replication_user}@${report_host}',{password:'password',interactive:false,restart:true});"
     wait $pid
     restart_required=1
@@ -286,6 +289,8 @@ function join_in_cluster() {
     log "info " "join_in_cluster $report_host"
     is_already_in_cluster
     if [[ "$already_in_cluster" == "1" ]]; then
+      echo "is in cluster...."
+        wait $pid
         return
     fi
     #rescan
@@ -333,14 +338,26 @@ function make_sure_instance_join_in_cluster() {
 function dropMetadataSchema() {
     #mysqlsh -urepl -hmysql-server-0.mysql-server.default.svc -ppassword -e "dba.dropMetadataSchema({force:true})"
     local mysqlshell="mysqlsh -u${replication_user} -h${report_host} -ppassword"
+    retry 3 $mysqlshell --sql -e "stop group_replication;"
+    retry 3 $mysqlshell --sql -e "reset master;"
+    retry 3 $mysqlshell --sql -e "set global group_replication_group_seeds='';"
     retry 3 $mysqlshell -e "dba.dropMetadataSchema({force:true,clearReadOnly:true})"
 }
 
 function reboot_from_completeOutage() {
+    ehco "----Hi----"
+#    cat >> /etc/hosts <<EOL
+#     #forc_fully doing this
+#                  fc00:f853:ccd:e793::3 innodb-2
+#                  fc00:f853:ccd:e793::4 innodb-0
+#                  fc00:f853:ccd:e793::5 innodb-1
+#EOL
     local mysqlshell="mysqlsh -u${replication_user} -h${report_host} -ppassword"
     #https://dev.mysql.com/doc/dev/mysqlsh-api-javascript/8.0/classmysqlsh_1_1dba_1_1_dba.html#ac68556e9a8e909423baa47dc3b42aadb
     #can sed type of things to make a list of hosts from the array...
-    $mysqlshell -e "dba.rebootClusterFromCompleteOutage('mycluster',{user:'repl',password:'password',rejoinInstances:['mysql-server-0.mysql-server.default.svc', 'mysql-server-1.mysql-server.default.svc', 'mysql-server-2.mysql-server.default.svc']})"
+    #mysql wait for user interaction to remove the unavailable seed from the cluster..
+    yes | $mysqlshell -e "dba.rebootClusterFromCompleteOutage('mycluster',{user:'repl',password:'password',rejoinInstances:['$report_host']})"
+    yes | $mysqlshell -e "cluster = dba.getCluster();  cluster.rescan()"
 }
 
 #starting mysqld in back ground
@@ -359,9 +376,11 @@ echo "----------------------------------$mysql_header---------------------------
 
 wait_for_host_online "root" "localhost" "$MYSQL_ROOT_PASSWORD"
 create_replication_user
+
+
 #need for when all instances of the cluster goes offline
 #dropMetadataSchema
-#retry 20 reboot_from_completeOutage
+retry 2 reboot_from_completeOutage
 wait_for_host_online "repl" "$report_host" "password"
 configure_instance
 if [[ "$restart_required" == "1" ]]; then
@@ -374,7 +393,8 @@ if [[ "$restart_required" == "1" ]]; then
 fi
 #check_existing_cluster
 select_primary
-dropMetadataSchema
+#todo stop_group replication and reset master...
+#dropMetadataSchema
 
 if [[ "$primary" == "not_found" ]]; then
     create_cluster
@@ -391,6 +411,7 @@ else
     #maybe need to re join or something else lets check
 fi
 echo "running pid of mysqld  $pid"
+make_sure_instance_join_in_cluster
 wait $pid
 
 #reserch stuff releated to failover
