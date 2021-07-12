@@ -1,17 +1,8 @@
-FROM mysql/mysql-server:8.0.23
-#failure: repodata/repomd.xml from mysql80-server-minimal: [Errno 256] No more mirrors to try.
-#RUN yum --disablerepo=mysql80-server-minimal ...
-RUN yum-config-manager --disable mysql80-server-minimal
+FROM tianon/toybox:0.8.4
 
-RUN yum install -y procps psmisc net-tools
+COPY peer-finder /tmp/scripts/peer-finder
 
-COPY innodb-on-start.sh /
+COPY scripts /tmp/scripts
+COPY init-script /init-script
 
-#VOLUME /etc/mysql
-
-# For standalone mysql
-# default entrypoint of parent mysql:8.0.23
-ENTRYPOINT ["/innodb-on-start.sh"]
-
-# For mysql group replication
-# ENTRYPOINT ["peer-finder"]
+ENTRYPOINT ["/init-script/run.sh"]
