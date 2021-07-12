@@ -126,7 +126,7 @@ function wait_for_host_online() {
 
 }
 
-primary="not_found"
+primary=""
 function select_primary() {
 
     for host in "${peers[@]}"; do
@@ -274,7 +274,7 @@ wait_for_host_online "repl" "$report_host" "${MYSQL_ROOT_PASSWORD}"
 configure_instance
 
 if [[ "$restart_required" == "1" ]]; then
-    #    log "INFO" "--------------------------------after configuration----------------------------"
+
     log "INFO" "/entrypoint.sh mysqld --user=root --report-host=$report_host  $@'..."
     /entrypoint.sh mysqld --user=root --report-host=$report_host --bind-address=* $@ &
     pid=$!
@@ -284,7 +284,7 @@ fi
 
 select_primary
 
-if [[ "$primary" == "not_found" ]]; then
+if [[ "$primary" == "" ]]; then
 
     if [[ "$recoverable" == "1" ]]; then
         retry 2 reboot_from_completeOutage
