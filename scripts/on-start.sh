@@ -48,12 +48,14 @@ report_host="yet to set"
 # find aliases form etc/hosts file
 while read -r -u9 line; do
     pod_ip=$(echo $line | cut -d' ' -f 1)
-    echo $pod_ip
+    echo "------------------pod_ip= $pod_ip--------------"
     if [[ $pod_ip == $myhost ]]; then
         report_host=$(echo $line | cut -d' ' -f 2)
-        echo $report_host
+        echo "----------------------report_host=$report_host--------------------"
     fi
 done 9<'/etc/hosts'
+
+echo "-------------------------$report_host--------------------"
 
 function retry {
     local retries="$1"
@@ -258,12 +260,14 @@ export MYSQL_ROOT_USERNAME=root
 export replication_user=repl
 
 find_peers
-
+sleep 100000
 # starting mysqld in background
 log "INFO" "/entrypoint.sh mysqld --user=root --report-host=$report_host  $@'..."
 /entrypoint.sh mysqld --user=root --report-host=$report_host --bind-address=* $@ &
 pid=$!
 log "INFO" "The process id of mysqld is '$pid'"
+
+#sleep 100000
 
 wait_for_host_online "root" "localhost" "$MYSQL_ROOT_PASSWORD"
 

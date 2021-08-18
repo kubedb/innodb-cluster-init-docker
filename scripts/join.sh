@@ -1,0 +1,3 @@
+create_user
+configure_instance
+join_in_cluster
