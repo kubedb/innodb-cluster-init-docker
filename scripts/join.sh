@@ -1,3 +1,9 @@
+start_mysqld
+
+waitformyqld
+
 create_user
+
 configure_instance
-join_in_cluster
+
+create_cluster
