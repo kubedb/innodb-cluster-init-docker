@@ -1,4 +1,3 @@
-
 function timestamp() {
     date +"%Y/%m/%d %T"
 }
@@ -34,5 +33,3 @@ function create_cluster() {
 }
 
 create_cluster
-
-

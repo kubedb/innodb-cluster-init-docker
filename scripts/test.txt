@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+hosts="innodb-0,innodb-2,innodb-3"
+IFS=', ' read -r -a array <<< "$hosts"
+echo "${array[@]}"
