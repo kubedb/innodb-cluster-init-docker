@@ -1,13 +1,6 @@
 #!/usr/bin/env bash
 #set -x
-echo hello >hello.txt
-echo "wating for files......"
-echo "--------------$@---------------"
 
-echo " basename = $BASE_NAME,  govservice = $GOV_SVC,  namespace = $POD_NAMESPACE, db_name = $DB_NAME , host name =$HOSTNAME"
-
-report_host="$HOSTNAME.$GOV_SVC.$POD_NAMESPACE.svc"
-echo "$report_host ----------------- $POD_IP"
 function timestamp() {
     date +"%Y/%m/%d %T"
 }
@@ -17,6 +10,8 @@ function log() {
     local msg="$2"
     echo "$(timestamp) [$script_name] [$type] $msg"
 }
+report_host="$HOSTNAME.$GOV_SVC.$POD_NAMESPACE.svc"
+log "INFO" "report_host = $report_host"
 
 # wait for the peer-list file created by coordinator
 while [ ! -f "/scripts/peer-list" ]; do
@@ -65,15 +60,7 @@ function wait_for_host_online() {
     fi
 
 }
-#function create_user() {
-#
-#    retry 120 mysql -u ${MYSQL_ROOT_USERNAME} -hlocalhost -p${MYSQL_ROOT_PASSWORD} -N -e "CREATE USER IF NOT EXISTS 'root'@'%' IDENTIFIED with mysql_native_password by '${MYSQL_ROOT_PASSWORD}';"
-#    retry 120 mysql -u ${MYSQL_ROOT_USERNAME} -hlocalhost -p${MYSQL_ROOT_PASSWORD} -N -e "CREATE USER IF NOT EXISTS 'repl'@'%' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' REQUIRE SSL;"
-#    retry 120 mysql -u ${MYSQL_ROOT_USERNAME} -hlocalhost -p${MYSQL_ROOT_PASSWORD} -N -e "GRANT ALL ON *.* TO 'repl'@'%' WITH GRANT OPTION;"
-#    retry 120 mysql -u ${MYSQL_ROOT_USERNAME} -hlocalhost -p${MYSQL_ROOT_PASSWORD} -N -e "GRANT ALL ON *.* TO 'root'@'%' WITH GRANT OPTION;"
-#    retry 120 mysql -u ${MYSQL_ROOT_USERNAME} -hlocalhost -p${MYSQL_ROOT_PASSWORD} -N -e "flush privileges;"
-#
-#}
+
 function create_replication_user() {
     # MySql server's need a replication user to communicate with each other
     # 01. official doc (section from 17.2.1.3 to 17.2.1.5): https://dev.mysql.com/doc/refman/5.7/en/group-replication-user-credentials.html
@@ -132,15 +119,12 @@ function configure_instance() {
 
 function create_cluster() {
     local mysqlshell="mysqlsh -u${replication_user} -p${MYSQL_ROOT_PASSWORD} -h${report_host}"
-    retry 5 $mysqlshell -e "cluster=dba.createCluster('mycluster',{exitStateAction:'READ_ONLY',autoRejoinTries:'2',consistency:'BEFORE_ON_PRIMARY_FAILOVER'});"
+    retry 5 $mysqlshell -e "cluster=dba.createCluster('mycluster',{exitStateAction:'OFFLINE_MODE',autoRejoinTries:'2',consistency:'BEFORE_ON_PRIMARY_FAILOVER'});"
 }
 primary=""
 function select_primary() {
 
     for host in "${peers[@]}"; do
-#        if [[ "$host" == "$report_host" ]];then
-#          continue
-#        fi
         local mysqlshell="mysqlsh -u${replication_user} -h${host} -p${MYSQL_ROOT_PASSWORD}"
         #result of the query output "member_host host_name" in this format
         retry 120 $mysqlshell --sql -e "SELECT member_host FROM performance_schema.replication_group_members where member_role = 'PRIMARY' ;"
@@ -184,7 +168,7 @@ function join_in_cluster() {
     fi
     #add a new instance
 
-    ${mysqlshell} -e "cluster = dba.getCluster();cluster.addInstance('${replication_user}@${report_host}',{password:'${MYSQL_ROOT_PASSWORD}',recoveryMethod:'incremental',exitStateAction:'READ_ONLY'});"
+    ${mysqlshell} -e "cluster = dba.getCluster();cluster.addInstance('${replication_user}@${report_host}',{password:'${MYSQL_ROOT_PASSWORD}',recoveryMethod:'clone',exitStateAction:'OFFLINE_MODE'});"
 
     # Prevent creation of new process until this one is finished
     #https://serverfault.com/questions/477448/mysql-keeps-crashing-innodb-unable-to-lock-ibdata1-error-11
@@ -219,7 +203,6 @@ function reboot_from_completeOutage() {
     local mysqlshell="mysqlsh -u${replication_user} -h${report_host} -p${MYSQL_ROOT_PASSWORD}"
     #https://dev.mysql.com/doc/dev/mysqlsh-api-javascript/8.0/classmysqlsh_1_1dba_1_1_dba.html#ac68556e9a8e909423baa47dc3b42aadb
     #mysql wait for user interaction to remove the unavailable seed from the cluster..
-#    sleep 100000
     yes | $mysqlshell -e "dba.rebootClusterFromCompleteOutage('mycluster',{user:'repl',password:'${MYSQL_ROOT_PASSWORD}',rejoinInstances:['$report_host']})"
     yes | $mysqlshell -e "cluster = dba.getCluster();  cluster.rescan()"
     wait $pid
@@ -242,6 +225,8 @@ if [[ "$restart_required" == "1" ]]; then
     wait_for_host_online "repl" "$report_host" "$MYSQL_ROOT_PASSWORD"
 fi
 
+
+
 # wait for the script copied by coordinator
 while [ ! -f "/scripts/signal.txt" ]; do
     log "WARNING" "signal is not present yet!"
@@ -258,7 +243,6 @@ if [[ $desired_func == "join_in_cluster" ]]; then
     join_in_cluster
     log "INFO" "/entrypoint.sh mysqld --user=root --report-host=$report_host  $@'..."
     /entrypoint.sh mysqld --user=root --report-host=$report_host --bind-address=* $@ &
-#    /entrypoint.sh mysqld --log-error=/tmp/error.txt --user=root --report-host=$report_host --bind-address=* $@ &
     pid=$!
     log "INFO" "The process id of mysqld is '$pid'"
     wait_for_host_online "repl" "$report_host" "${MYSQL_ROOT_PASSWORD}"
@@ -276,16 +260,4 @@ if [[ $desired_func == "reboot_from_complete_outage" ]]; then
 fi
 echo "wating for pid = $pid"
 wait $pid
-#if signal == '1'{
-#  create_cluster
-#}
-#if signal == 2{
-#  joincluster
-#}
-#if signal == 3{
-#  reboot_from_complete_outrage
-#}
-#wait for create cluster scirpts
-#wait for join cluster scipts
-#wait for reboot from complete outrage
 
