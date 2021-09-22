@@ -10,6 +10,8 @@ function log() {
     local msg="$2"
     echo "$(timestamp) [$script_name] [$type] $msg"
 }
+#stores all the arguments that are passed form statefulset
+args=$@
 report_host="$HOSTNAME.$GOV_SVC.$POD_NAMESPACE.svc"
 log "INFO" "report_host = $report_host"
 
@@ -158,17 +160,16 @@ function join_in_cluster() {
 
     #cheking for instance can rejoin during a fail-over
     local mysqlshell="mysqlsh -u${replication_user} -p${MYSQL_ROOT_PASSWORD} -h${primary}"
-        ${mysqlshell} -e "cluster=dba.getCluster(); cluster.rejoinInstance('${replication_user}@${report_host}',{password:'${MYSQL_ROOT_PASSWORD}'})"
-        ${mysqlshell} -e "cluster = dba.getCluster();  cluster.rescan({addInstances:['${report_host}:3306'],interactive:false})"
-        wait_for_host_online "repl" "$report_host" "${MYSQL_ROOT_PASSWORD}"
+    ${mysqlshell} -e "cluster=dba.getCluster(); cluster.rejoinInstance('${replication_user}@${report_host}',{password:'${MYSQL_ROOT_PASSWORD}'})"
+    ${mysqlshell} -e "cluster = dba.getCluster();  cluster.rescan({addInstances:['${report_host}:3306'],interactive:false})"
+    wait_for_host_online "repl" "$report_host" "${MYSQL_ROOT_PASSWORD}"
     is_already_in_cluster
 
     if [[ "$already_in_cluster" == "1" ]]; then
         wait $pid
     fi
     #add a new instance
-
-    ${mysqlshell} -e "cluster = dba.getCluster();cluster.addInstance('${replication_user}@${report_host}',{password:'${MYSQL_ROOT_PASSWORD}',recoveryMethod:'clone',exitStateAction:'OFFLINE_MODE'});"
+    ${mysqlshell} -e "cluster = dba.getCluster();cluster.addInstance('${replication_user}@${report_host}',{password:'${MYSQL_ROOT_PASSWORD}',recoveryMethod:'incremental',exitStateAction:'OFFLINE_MODE'});"
 
     # Prevent creation of new process until this one is finished
     #https://serverfault.com/questions/477448/mysql-keeps-crashing-innodb-unable-to-lock-ibdata1-error-11
@@ -208,56 +209,68 @@ function reboot_from_completeOutage() {
     wait $pid
 }
 
+export pid
+function start_mysqld_in_background() {
+    log "INFO" "Starting mysql server with 'docker-entrypoint.sh mysqld $args'..."
+    /entrypoint.sh mysqld --user=root --report-host=$report_host --bind-address=* $args &
+    pid=$!
+    log "INFO" "The process id of mysqld is '$pid'"
+}
+
 replication_user=repl
 
-/entrypoint.sh mysqld  --user=root --report-host=$report_host --bind-address=* $@ &
-pid=$!
-log "INFO" "The process id of mysqld is '$pid'"
+start_mysqld_in_background
 wait_for_host_online "root" "localhost" "$MYSQL_ROOT_PASSWORD"
 create_replication_user
 configure_instance
 if [[ "$restart_required" == "1" ]]; then
-
-    log "INFO" "/entrypoint.sh mysqld --user=root --report-host=$report_host  $@'..."
-    /entrypoint.sh mysqld --user=root --report-host=$report_host --bind-address=* $@ &
-    pid=$!
-    log "INFO" "The process id of mysqld is '$pid'"
+    start_mysqld_in_background
     wait_for_host_online "repl" "$report_host" "$MYSQL_ROOT_PASSWORD"
 fi
 
+while true; do
+    kill -0 $pid
+    kill -0 $pid
+    exit="$?"
+    echo "exit code ------------------$exit--------------------"
+    if [[ "$exit" == "0" ]]; then
+        echo "mysqld process is running"
+    else
+        echo "need start mysqld and wait_for_mysqld_running"
+        start_mysqld_in_background
+        wait_for_host_online "repl" "$report_host" "$MYSQL_ROOT_PASSWORD"
+    fi
 
+    # wait for the script copied by coordinator
+    while [ ! -f "/scripts/signal.txt" ]; do
+        log "WARNING" "signal is not present yet!"
+        sleep 1
+    done
+    desired_func=$(cat /scripts/signal.txt)
+    rm -rf /scripts/signal.txt
+    echo $desired_func
+    if [[ $desired_func == "create_cluster" ]]; then
+        create_cluster
+    fi
 
-# wait for the script copied by coordinator
-while [ ! -f "/scripts/signal.txt" ]; do
-    log "WARNING" "signal is not present yet!"
-    sleep 1
+    if [[ $desired_func == "join_in_cluster" ]]; then
+        select_primary
+        join_in_cluster
+        start_mysqld_in_background
+        wait_for_host_online "repl" "$report_host" "${MYSQL_ROOT_PASSWORD}"
+        make_sure_instance_join_in_cluster
+    fi
+
+    if [[ $desired_func == "rejoin_in_cluster" ]]; then
+        select_primary
+        rejoin_in_cluster
+        join_in_cluster
+    fi
+
+    if [[ $desired_func == "reboot_from_complete_outage" ]]; then
+        reboot_from_completeOutage
+    fi
+    echo "wating for pid = $pid"
+    wait $pid
+
 done
-desired_func=$(cat /scripts/signal.txt)
-echo $desired_func
-if [[ $desired_func == "create_cluster" ]]; then
-    create_cluster
-fi
-
-if [[ $desired_func == "join_in_cluster" ]]; then
-    select_primary
-    join_in_cluster
-    log "INFO" "/entrypoint.sh mysqld --user=root --report-host=$report_host  $@'..."
-    /entrypoint.sh mysqld --user=root --report-host=$report_host --bind-address=* $@ &
-    pid=$!
-    log "INFO" "The process id of mysqld is '$pid'"
-    wait_for_host_online "repl" "$report_host" "${MYSQL_ROOT_PASSWORD}"
-    make_sure_instance_join_in_cluster
-fi
-
-if [[ $desired_func == "rejoin_in_cluster" ]]; then
-    select_primary
-    rejoin_in_cluster
-    join_in_cluster
-fi
-
-if [[ $desired_func == "reboot_from_complete_outage" ]]; then
-    reboot_from_completeOutage
-fi
-echo "wating for pid = $pid"
-wait $pid
-
