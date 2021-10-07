@@ -123,15 +123,16 @@ function create_cluster() {
     local mysqlshell="mysqlsh -u${replication_user} -p${MYSQL_ROOT_PASSWORD} -h${report_host}"
     retry 5 $mysqlshell -e "cluster=dba.createCluster('mycluster',{exitStateAction:'OFFLINE_MODE',autoRejoinTries:'2',consistency:'BEFORE_ON_PRIMARY_FAILOVER'});"
 }
-primary=""
+export  primary=""
 function select_primary() {
 
     for host in "${peers[@]}"; do
+      echo  "-------------$host------------"
         local mysqlshell="mysqlsh -u${replication_user} -h${host} -p${MYSQL_ROOT_PASSWORD}"
         #result of the query output "member_host host_name" in this format
-        retry 120 $mysqlshell --sql -e "SELECT member_host FROM performance_schema.replication_group_members where member_role = 'PRIMARY' ;"
+        retry 240 $mysqlshell --sql -e "SELECT member_host FROM performance_schema.replication_group_members where member_role = 'PRIMARY' ;"
         selected_primary=($($mysqlshell --sql -e "SELECT member_host FROM performance_schema.replication_group_members where member_role = 'PRIMARY' ;"))
-
+        echo "-----------------$select_primary----------"
         if [[ "${#selected_primary[@]}" -ge "1" ]]; then
             primary=${selected_primary[1]}
             log "INFO" "Primary found $primary."
@@ -156,19 +157,20 @@ function is_already_in_cluster() {
     done
 }
 function join_in_cluster() {
-    log "INFO " "$report_host joining in cluster"
-
-    #cheking for instance can rejoin during a fail-over
-    local mysqlshell="mysqlsh -u${replication_user} -p${MYSQL_ROOT_PASSWORD} -h${primary}"
-    ${mysqlshell} -e "cluster=dba.getCluster(); cluster.rejoinInstance('${replication_user}@${report_host}',{password:'${MYSQL_ROOT_PASSWORD}'})"
-    ${mysqlshell} -e "cluster = dba.getCluster();  cluster.rescan({addInstances:['${report_host}:3306'],interactive:false})"
-    wait_for_host_online "repl" "$report_host" "${MYSQL_ROOT_PASSWORD}"
-    is_already_in_cluster
-
-    if [[ "$already_in_cluster" == "1" ]]; then
-        wait $pid
-    fi
+#    log "INFO " "$report_host joining in cluster"
+#
+#    #cheking for instance can rejoin during a fail-over
+#    local mysqlshell="mysqlsh -u${replication_user} -p${MYSQL_ROOT_PASSWORD} -h${primary}"
+#    ${mysqlshell} -e "cluster=dba.getCluster(); cluster.rejoinInstance('${replication_user}@${report_host}',{password:'${MYSQL_ROOT_PASSWORD}'})"
+#    ${mysqlshell} -e "cluster = dba.getCluster();  cluster.rescan({addInstances:['${report_host}:3306'],interactive:false})"
+#    wait_for_host_online "repl" "$report_host" "${MYSQL_ROOT_PASSWORD}"
+#    is_already_in_cluster
+#
+#    if [[ "$already_in_cluster" == "1" ]]; then
+#        wait $pid
+#    fi
     #add a new instance
+    local mysqlshell="mysqlsh -u${replication_user} -p${MYSQL_ROOT_PASSWORD} -h${primary}"
     ${mysqlshell} -e "cluster = dba.getCluster();cluster.addInstance('${replication_user}@${report_host}',{password:'${MYSQL_ROOT_PASSWORD}',recoveryMethod:'incremental',exitStateAction:'OFFLINE_MODE'});"
 
     # Prevent creation of new process until this one is finished
@@ -176,7 +178,7 @@ function join_in_cluster() {
     wait $pid
 
 }
-
+joined_in_cluster=0
 function make_sure_instance_join_in_cluster() {
     local mysqlshell="mysqlsh -u${replication_user} -p${MYSQL_ROOT_PASSWORD} -h${primary}"
     retry 10 ${mysqlshell} -e "cluster = dba.getCluster();  cluster.rescan({addInstances:['${report_host}:3306'],interactive:false})"
@@ -184,6 +186,7 @@ function make_sure_instance_join_in_cluster() {
 
     for host in "${out[@]}"; do
         if [[ "$host" == "$report_host" ]]; then
+          join_in_cluster=1
             echo "$report_host successfully join_in_cluster"
         fi
     done
@@ -264,7 +267,10 @@ while true; do
     if [[ $desired_func == "rejoin_in_cluster" ]]; then
         select_primary
         rejoin_in_cluster
-        join_in_cluster
+        make_sure_instance_join_in_cluster
+        if [[ "$joined_in_cluster" == "0" ]];then
+          join_in_cluster
+        fi
     fi
 
     if [[ $desired_func == "reboot_from_complete_outage" ]]; then
